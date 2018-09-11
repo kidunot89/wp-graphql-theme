@@ -1,0 +1,16 @@
+/*
+Theme Name: Twenty Fifteen with React-Apollo
+Theme URI: https://github.com/kidunot89/wpgraphql-theme/
+Author: Geoff Taylor & WordPress.org
+Author URI: https://axistaylor.com
+Description: React-Apollo Wordpress theme based off Twenty-Fifteen theme.
+Version: 0.0.1
+License: GNU General Public License v2 or later
+License URI: LICENSE
+Text Domain: twentyfifteen-react-apollo
+Tags: React.js, React-Apollo, GraphQL, Bootstrap4
+*/
+
+.graphql-endpoint {
+  display: hidden;
+}

@@ -1,0 +1,261 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7d1cd9cd0ec541c9b0071958b63f7d28",
+    "packages": [],
+    "packages-dev": [
+        {
+            "name": "firebase/php-jwt",
+            "version": "v4.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/firebase/php-jwt.git",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/firebase/php-jwt/zipball/dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "reference": "dccf163dc8ed7ed6a00afc06c51ee5186a428d35",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Firebase\\JWT\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Neuman Vong",
+                    "email": "neuman+pear@twilio.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Anant Narayanan",
+                    "email": "anant@php.net",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A simple library to encode and decode JSON Web Tokens (JWT) in PHP. Should conform to the current spec.",
+            "homepage": "https://github.com/firebase/php-jwt",
+            "time": "2016-07-18T04:51:16+00:00"
+        },
+        {
+            "name": "ivome/graphql-relay-php",
+            "version": "v0.3.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ivome/graphql-relay-php.git",
+                "reference": "bc5f8aae9fd72ca16decce3892ec4311e9742a93"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ivome/graphql-relay-php/zipball/bc5f8aae9fd72ca16decce3892ec4311e9742a93",
+                "reference": "bc5f8aae9fd72ca16decce3892ec4311e9742a93",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.4,<8.0-DEV",
+                "webonyx/graphql-php": ">=0.7.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "description": "A PHP port of GraphQL Relay reference implementation",
+            "homepage": "https://github.com/ivome/graphql-relay-php",
+            "keywords": [
+                "Relay",
+                "api",
+                "graphql"
+            ],
+            "time": "2016-10-29T23:29:29+00:00"
+        },
+        {
+            "name": "webonyx/graphql-php",
+            "version": "v0.11.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webonyx/graphql-php.git",
+                "reference": "f438a726cd523bc584e78d866eca270165c42fd5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/f438a726cd523bc584e78d866eca270165c42fd5",
+                "reference": "f438a726cd523bc584e78d866eca270165c42fd5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": ">=5.5,<8.0-DEV"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.8",
+                "psr/http-message": "^1.0"
+            },
+            "suggest": {
+                "psr/http-message": "To use standard GraphQL server",
+                "react/promise": "To leverage async resolving on React PHP platform"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/deprecated.php"
+                ],
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP port of GraphQL reference implementation",
+            "homepage": "https://github.com/webonyx/graphql-php",
+            "keywords": [
+                "api",
+                "graphql"
+            ],
+            "time": "2018-04-17T10:34:43+00:00"
+        },
+        {
+            "name": "wp-graphql/wp-graphiql",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-graphql/wp-graphiql.git",
+                "reference": "e1d06bf1958c2ad5adda6f400b933af3de445c75"
+            },
+            "type": "wordpress-plugin",
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "Jason Bahl",
+                    "email": "jasonbahl@mac.com"
+                }
+            ],
+            "description": "GraphiQL IDE in the WP-Admin. Works with the WPGraphQL plugin. https://github.com/wp-graphql/wp-graphql",
+            "time": "2018-08-14T15:53:56+00:00"
+        },
+        {
+            "name": "wp-graphql/wp-graphql",
+            "version": "dev-develop",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-graphql/wp-graphql.git",
+                "reference": "aa69a640b6877292a84a710c7270ac7403680b95"
+            },
+            "require": {
+                "ivome/graphql-relay-php": "^0.3.1",
+                "webonyx/graphql-php": "^0.11.2"
+            },
+            "require-dev": {
+                "apigen/apigen": "^4.1",
+                "lucatume/wp-browser": "~1.21.20"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "WPGraphQL\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Jason Bahl",
+                    "email": "jasonbahl@mac.com"
+                },
+                {
+                    "name": "Edwin Cromley"
+                },
+                {
+                    "name": "Ryan Kanner"
+                },
+                {
+                    "name": "Hughie Devore"
+                },
+                {
+                    "name": "Chris Zarate"
+                }
+            ],
+            "description": "GraphQL API for WordPress",
+            "time": "2018-08-31T01:23:17+00:00"
+        },
+        {
+            "name": "wp-graphql/wp-graphql-jwt-authentication",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-graphql/wp-graphql-jwt-authentication.git",
+                "reference": "a468039a2086bf7536aa1ba5405802f190b78f35"
+            },
+            "require": {
+                "firebase/php-jwt": "^4.0"
+            },
+            "require-dev": {
+                "codeception/c3": "2.*",
+                "lucatume/wp-browser": "^1.21",
+                "phpunit/phpcov": "^4.0",
+                "satooshi/php-coveralls": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "autoload": {
+                "psr-4": {
+                    "WPGraphQL\\JWT_Authentication\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "license": [
+                "GPL-3.0+"
+            ],
+            "authors": [
+                {
+                    "name": "jasonbahl",
+                    "email": "jasonbahl@mac.com"
+                }
+            ],
+            "description": "JWT Authentication for WPGraphQL",
+            "time": "2018-04-10T19:38:57+00:00"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "wp-graphql/wp-graphiql": 20,
+        "wp-graphql/wp-graphql": 20,
+        "wp-graphql/wp-graphql-jwt-authentication": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

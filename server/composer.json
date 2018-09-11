@@ -1,0 +1,30 @@
+{
+    "name": "geoff/react-js-sandbox",
+    "description": "For installing wp-graphql docker development environment",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Geoff Taylor",
+            "email": "geoffrey.taylor@outlook.com"
+        }
+    ],
+    "repositories": [
+      {
+        "type": "git",
+        "url": "https://github.com/wp-graphql/wp-graphiql.git"
+      }, {
+        "type": "git",
+        "url": "https://github.com/wp-graphql/wp-graphql.git"
+      }, {
+        "type": "git",
+        "url": "https://github.com/wp-graphql/wp-graphql-jwt-authentication.git"
+      }
+    ],
+    "require": {},
+    "require-dev": {
+      "wp-graphql/wp-graphiql": "dev-master",
+      "wp-graphql/wp-graphql": "dev-develop",
+      "wp-graphql/wp-graphql-jwt-authentication": "dev-master"
+    }
+}
+

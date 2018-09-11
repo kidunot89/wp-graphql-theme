@@ -1,0 +1,32 @@
+{
+  "name": "react-js-sandbox",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "apollo-boost": "^0.1.15",
+    "bootstrap": "^4.1.3",
+    "graphql": "^14.0.0",
+    "react": "^16.5.0",
+    "react-apollo": "^2.1.11",
+    "react-dom": "^16.5.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "1.1.5",
+    "reactstrap": "^6.4.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "devDependencies": {
+    "jest-dom": "^1.12.0",
+    "react-testing-library": "^5.0.1"
+  },
+  "proxy": {
+    "/graphql": {
+      "target": "http://wpgraphql.example:8000",
+      "ws": true
+    }
+  }
+}
