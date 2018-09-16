@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
+import Error from './error';
 import Header from './header';
+import Loading from './loading';
 import MainContent from './main-content';
-import Attachment from './apollo/attachment';
-import List from './apollo/list';
-import ListItem from './apollo/list-item';
 import Login from './apollo/login';
 import Menu from './apollo/menu';
-import Page from './apollo/page';
-import Post from './apollo/post';
-import Routes from './apollo/routes';
 import Sidebar from './apollo/sidebar';
 import Widget from './apollo/widget';
 
@@ -48,13 +44,8 @@ const customizr = (stylist) => {
       this.remove = this.remove.bind(this);
       this.Header = customizable(Header, stylist, 'header');
       this.MainContent = customizable(MainContent, stylist, 'main-content');
-      this.Attachment = customizable(Attachment, stylist, 'attachment');
-      this.List = customizable(List, stylist, 'list');
-      this.ListItem = customizable(ListItem, stylist, 'list-item');
       this.Login = customizable(Login, stylist, 'login');
       this.Menu = customizable(Menu, stylist, 'menu');
-      this.Post = customizable(Post, stylist, 'post');
-      this.Page = customizable(Page, stylist, 'page');
       this.Sidebar = customizable(Sidebar, stylist, 'sidebar');
       this.Widget = customizable(Widget, stylist, 'widget');
     }
@@ -72,8 +63,7 @@ const customizr = (stylist) => {
 };
 
 export { 
-  customizable, customizr, Attachment, List,
-  ListItem, Login, Menu, Post, 
-  Page, Routes, Sidebar, Widget, 
-  Header, MainContent
+  customizable, customizr,
+  Login, Menu, Sidebar, Widget, 
+  Error, Header, Loading, MainContent
 };

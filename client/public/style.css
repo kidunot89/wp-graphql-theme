@@ -11,6 +11,6 @@ Text Domain: twentyfifteen-react-apollo
 Tags: React.js, React-Apollo, GraphQL, Bootstrap4
 */
 
-.graphql-endpoint {
+#page, .graphql-endpoint {
   display: hidden;
 }

@@ -48,6 +48,6 @@ get_header(); ?>
 	endif; ?>
 
 	</main><!-- #primary -->
-	<span id="graphql" class="graphql-endpoint" data-endpoint="<?php twentyfifteen_graphql_endpoint() ?>" />
+	<span id="graphql" class="graphql-endpoint" data-endpoint="<?php echo twentyfifteen_graphql_endpoint() ?>" />
 <?php
 get_footer();

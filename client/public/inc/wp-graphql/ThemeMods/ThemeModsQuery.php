@@ -2,9 +2,10 @@
 
 namespace WPGraphQL\Type\ThemeMods;
 
-use WPGraphQL\ThemeTypes;
+use WPGraphQL\CustomTypes;
 use WPGraphQL\Types;
 use WPGraphQL\Data\DataSource;
+use WPGraphQL\Data\ExtraSource;
 
 /**
  * Class ThemeModsQuery
@@ -32,9 +33,9 @@ class ThemeModsQuery {
 	public static function root_query() {
 		if ( null === self::$root_query ) {
 			self::$root_query = [
-				'type'        => ThemeTypes::theme_mods(),
+				'type'        => CustomTypes::theme_mods(),
 				'resolve'     => function () {
-					return ThemeModsType::get_theme_mods_data();
+					return ExtraSource::resolve_theme_mods_data();
 				},
 			];
 		}
