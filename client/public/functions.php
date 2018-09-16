@@ -122,17 +122,17 @@
 	 * 
 	 * @since 0.0.1
 	 */
-	function wp_react_enqueue_scripts() {
+	function twentyfifteen_enqueue_scripts() {
 
     $assets = json_decode( file_get_contents( get_template_directory() . '/asset-manifest.json' ), true );
 
 		wp_enqueue_style( 'theme-docs', get_stylesheet_uri() );
 
-		wp_enqueue_style( 'main-style', get_template_directory_uri() . '/' . $assets['main.js'] );
+		wp_enqueue_style( 'main-style', get_template_directory_uri() . '/' . $assets['main.css'] );
 		wp_enqueue_script( 'main-script', get_template_directory_uri() . '/' . $assets['main.js'], array(), THEME_VERSION, true );
 
 	}
-	add_action( 'wp_enqueue_scripts', 'wp_react_enqueue_scripts' );
+	add_action( 'wp_enqueue_scripts', 'twentyfifteen_enqueue_scripts' );
 	
 	/**
 	 * Implement the Custom Header feature.
@@ -152,7 +152,7 @@
 	/**
    * Adds Customizr settings
    */
-  require get_template_directory() . '/inc/customizr.php';
+  require get_template_directory() . '/inc/stylist.php';
 
   /**
    * Adds GraphQL schema modifications

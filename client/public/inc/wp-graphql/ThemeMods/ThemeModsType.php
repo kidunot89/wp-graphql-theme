@@ -4,9 +4,9 @@ namespace WPGraphQL\Type\ThemeMods;
 
 use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
-use TwentyFifteen\Customizr;
 use WPGraphQL\AppContext;
 use WPGraphQL\Data\DataSource;
+use WPGraphQL\Data\ExtraSource;
 use WPGraphQL\Type\WPObjectType;
 use WPGraphQL\Types;
 
@@ -66,119 +66,124 @@ class ThemeModsType extends WPObjectType {
 
 		if (null === self::$fields) {
 			self::$fields = function() {
-				
+
+				$fields = [
+					'background' => [ 
+						'type' 				=> Types::post_object( 'attachment' ),
+						'description'	=> __( 'custom background', 'wp-graphql-extra-options' ),
+						'resolve'			=> function( $root, $args, $context, $info ) {
+							if( ! empty( $root['background'] ) ) { 
+								return ( ! empty( $root['background']['id'] ) ) ?
+									DataSource::resolve_post_object( absint( $root['background']['id'] ), 'attachment' ) :
+									null;
+							}
+			
+							return null;
+						}
+					],
+					'backgroundColor' => [ 
+						'type' 				=> Types::string(),
+						'description'	=> __( 'background color', 'wp-graphql-extra-options' ),
+						'resolve'			=> function( $root, $args, $context, $info ) {
+							return ( ! empty( $root['background_color'] ) ) ? $root['background_color'] : null;
+						}
+					],
+					'customCssPostId' => [ 
+						'type' 				=> Types::int(),
+						'description'	=> __( 'custom theme logo', 'wp-graphql-extra-options' ),
+						'resolve'			=> function( $root, $args, $context, $info ) {
+							return ( ! empty( $root['custom_css_post_id'] ) ) ? $root['custom_css_post_id'] : null;
+						}
+					],
+					'customLogo' => [ 
+						'type' 				=> Types::post_object( 'attachment' ),
+						'description'	=> __( 'custom theme logo', 'wp-graphql-extra-options' ),
+						'resolve'			=> function( $root, $args, $context, $info ){
+							return ( ! empty( $root['custom_logo'] ) ) ? DataSource::resolve_post_object( absint( $root['custom_logo'] ), 'attachment' ) : null;
+						}
+					],
+					'headerImage' => [ 
+						'type' 				=> Types::post_object( 'attachment' ),
+						'description'	=> __( 'custom header image', 'wp-graphql-extra-options' ),
+						'resolve'			=> function( $root, $args, $context, $info ){
+							if( ! empty ( $root['header_image'] ) ) {
+								return ( ! empty( $root['header_image']['id'] ) ) ?
+									DataSource::resolve_post_object( absint( $root['header_image']['id'] ), 'attachment' ) :
+									null;
+							}
+							
+							return null;
+						},
+					],
+					'navMenuLocations' => [
+						'type' 				=> Types::menu(),
+						'description'	=> __( 'theme menu locations', 'wp-graphql-extra-options' ),
+						'args'				=> [
+							'location' => [
+								'type'	=> Types::string(),
+								'description' => __( 'theme menu location name', 'wp-graphql-extra-options' )
+							],
+						],
+						'resolve'			=> function($root, $args, $context, $info ) {
+							if ( ! empty( $args[ 'location' ] ) && ! empty ( $root['nav_menu_locations'] ) ) {
+								$location = $args[ 'location' ];
+								return ( ! empty( $root['nav_menu_locations'][ $location ] ) ) ?
+									DataSource::resolve_term_object( absint( $root['nav_menu_locations'][ $location ] ), 'nav_menu' ) :
+									null;
+							}
+			
+							return null;
+						}
+					]
+				];
+
 				/**
-				 * Get theme_mod_data
+				 * Get default field types, prepare fields and return field definitions
 				 */
-				$theme_mods_data = self::get_theme_mods_data();
-				
-				/**
-				 * Loop through data and resolve field definition
-				 */
-				$fields = [];
-				foreach( $theme_mods_data as $mod_name => $mod_data ) {
-
-					/**
-					 * Format mod name to a WPGraphQL-friendly name
-					 */
-					$field_key = lcfirst( str_replace( ['_', '-'], '', ucwords( $mod_name, '_-' ) ) );
-					
-					/**
-					 * Dynamically build the individual setting and it's fields
-					 * then add it to $fields
-					 */
-					$field = ThemeModsFields::$mod_name();
-					
-					if (false !== $field)	$fields[ $field_key ] = $field;
-
-				}
-
-				/**
-				 * Prepare and return field definitions
-				 */
-
-				$fields = self::prepare_fields( $fields, self::$type_name );
+				$fields = self::prepare_fields( self::get_default_fields( $fields ), self::$type_name );
 				return ! empty( $fields ) ? $fields : null;
 			};
 		}
 
     return self::$fields;
-
 	}
-	
-	/**
-	 * Retrieves and formats theme modification data
-	 *
-	 * @param array|null $theme_mods - array of raw theme modification data
-	 * @return array|null
-	 */
-	public static function get_theme_mods_data() {
-		require_once ABSPATH . WPINC . '/theme.php';
-		require_once get_template_directory() . '/inc/customizr.php';
-		$_REQUEST['wp_customize'] = 'on';
-		\_wp_customize_include();
 
-		global $wp_customize;
-		$wp_customize->setup_theme();
-		/**
-		 * Output array
-		 */
-		$theme_mod_data = [];
-		/**
-		 * Loop through raw active theme mods array and format theme mod data
-		 */
+	/**
+	 * Adds custom fields stored in theme_mods to field definitions
+	 *
+	 * @param array $fields
+	 * @return array
+	 */
+	private static function get_default_fields( $fields ) {
 		
-		$theme_mods = $wp_customize->settings();
-		var_dump( $theme_mods );
-		foreach( $theme_mods as $mod_name => $mod_data ){
-			if( gettype($mod_name) === 'integer' ) continue;
-			switch( $mod_name ) {
-				/**
-				 * Custom CSS Post Id
-				 */
-				case 'custom_css_post_id':
-					$theme_mod_data[ $mod_name ] = absint($mod_data);
-					break;
-				
-				/**
-				 * Background
-				 */
-				case 'background_preset':
-				case 'background_size':
-				case 'background_repeat':
-				case 'background_attachment':
-					$key = str_replace('background_', '', $mod_name );
-					$theme_mod_data[ 'background' ][ $key ] = $mod_data;
-					break;
-				case 'background_image':
-					$theme_mod_data[ 'background' ]['id'] = attachment_url_to_postid( (string) $mod_data );
-					break;
-				case 'background_color':
-					$theme_mod_data[ $mod_name ] =  (string) $mod_data;
-					break;
-				/**
-				 * Custom Logo
-				 */
-				case 'custom_logo':
-					$theme_mod_data[ $mod_name ] = absint( $mod_data );
-					break;
-				/**
-				 * Header Image
-				 */
-				case 'header_image_data':
-					$theme_mod_data[ 'header_image' ] += get_object_vars( $mod_data );
-					break;
-				case 'header_image':
-					$theme_mod_data[ 'header_image' ]['id'] = attachment_url_to_postid( (string) $mod_data );
-					break;
-				/**
-				 * Nav Menu Locations and Custom Mods
-				 */
-				default:
-					$theme_mod_data[ $mod_name ] = $mod_data;
-			}
+		/**
+		 * Loop through theme mod data and define fields
+		 */
+		foreach( ExtraSource::resolve_theme_mods_data() as $mod_name => $mod_data ) {
+			/**
+			 * Format mod name to a WPGraphQL-friendly name
+			 */
+			$field_key = lcfirst( str_replace( ['_', '-'], '', ucwords( $mod_name, '_-' ) ) );
+			
+			/**
+			 * Continue if field exists
+			 */
+			if ( ! empty( $fields[ $field_key ] ) ) continue;
+			
+			/**
+			 * Define field
+			 */
+			$fields[ $field_key ] = [ 
+				'type' 				=> Types::string(),
+				'description'	=> $mod_name,
+				'resolve'			=> function( $root, $args, $context, $info ) use( $mod_name ) {
+					return ( ! empty( $root[ $mod_name ] ) ) ? (string) $root[ $mod_name ] : null;
+				}
+			];
+
 		}
-		return $theme_mod_data;
+
+		return $fields;
 	}
 
 }

@@ -6,6 +6,7 @@ use GraphQL\Error\UserError;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQLRelay\Relay;
 use WPGraphQL\AppContext;
+use WPGraphQL\CustomTypes;
 use WPGraphQL\Data\DataSource;
 use WPGraphQL\Type\WPInputObjectType;
 use WPGraphQL\Types;
@@ -38,7 +39,7 @@ class ThemeModsUpdate {
 				'inputFields'         => WPInputObjectType::prepare_fields( ThemeModsMutation::input_fields(), $mutation_name ),
 				'outputFields'        => [
 					'themeMods' => [
-						'type'    => Types::theme_mods(),
+						'type'    => CustomTypes::theme_mods(),
 						'resolve' => function () {
               return DataSource::get_theme_mods_data();
 						},

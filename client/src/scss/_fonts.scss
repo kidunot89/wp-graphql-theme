@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans|Montserrat');
+
+$fa-font-path: '/assets/fonts';
+
+$font-family-sans-serif:      'Montserrat', sans-serif;
+$font-family-monospace:       SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+
+$headings-font-family:        'Josefin Sans', sans-serif;
+$headings-font-weight:        500;
+$headings-line-height:        1.2;
+
+
+small, .small {
+  font-family:                $font-family-sans-serif;
+}
+
+
+

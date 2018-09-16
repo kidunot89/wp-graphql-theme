@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row, Col } from 'reactstrap';
+import { Row, Col } from 'reactstrap';
 
 class MainContent extends Component {
   constructor(props) {
@@ -11,12 +11,13 @@ class MainContent extends Component {
   render() {
     const { children } = this.props;
     return (
-      <Container>
-        <Row></Row>
-        <Row>
-          {children}
-        </Row>
-      </Container>
+        <Col>
+          <Row className="flex-column align-items-center mt-3 mb-2">
+            <Col xs={10}>
+              {children}
+            </Col>
+          </Row>
+        </Col>
     )
   }
 }

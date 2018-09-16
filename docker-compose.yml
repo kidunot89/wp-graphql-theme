@@ -42,15 +42,16 @@ services:
       WORDPRESS_DB_USER: "root"
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
-        define( 'WP_DEFAULT_THEME', 'twentyfifteen' );
+        define( 'WP_DEFAULT_THEME', 'wpgraphql-theme-test' );
 
     networks:
       - "dev"
     volumes:
       - "./client/build:/var/www/html/wp-content/themes/wpgraphql-theme"
+      - "./client/public:/var/www/html/wp-content/themes/wpgraphql-theme-test"
       - "./server/vendor/wp-graphql/wp-graphiql:/var/www/html/wp-content/plugins/wp-graphiql"
       - "./server/vendor/wp-graphql/wp-graphql:/var/www/html/wp-content/plugins/wp-graphql"
-      - "./server/wpgraphql-settings.php:/var/www/html/wp-content/plugins/wpgraphql-settings.php"
+      - "./server/src:/var/www/html/wp-content/plugins/wpgraphql-settings"
       - "./server/vendor/wp-graphql/wp-graphql-jwt-authentication:/var/www/html/wp-content/plugins/wp-graphql-jwt-authentication"
   mysql:
     image: "mariadb:10.2"

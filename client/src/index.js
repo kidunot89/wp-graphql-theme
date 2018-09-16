@@ -12,7 +12,6 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import registerServiceWorker from './registerServiceWorker';
 
 import App from './app';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 /**
  * Retrieve GraphQL Endpoint
@@ -21,18 +20,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
  * must be provided manually for Webpack Dev Server. 
  * 
  */
+
+// Delete window.endpoint and span#graphql as a security measure
+const graphqlDOM = document.querySelector('#graphql');
+let endpoint;
+if (graphqlDOM) {
+  endpoint = graphqlDOM.getAttribute('data-endpoint');
+  graphqlDOM.parentElement.removeChild(graphqlDOM);
+}
 const httpLink = new HttpLink({
   uri: (process.env.REACT_APP_APOLLO_CLIENT_URI) ? 
-    process.env.REACT_APP_APOLLO_CLIENT_URI : window.endpoint,
+    process.env.REACT_APP_APOLLO_CLIENT_URI : endpoint,
   credentials: 'same-origin',
 });
 
-// Delete window.endpoint and script#ep as a security measure
-const endpoint = document.querySelector('#ep');
-if (endpoint) {
-  document.querySelector('body').removeChild(endpoint);
-  delete window.endpoint;
-}
+console.log( (process.env.REACT_APP_APOLLO_CLIENT_URI) ? 
+process.env.REACT_APP_APOLLO_CLIENT_URI : endpoint, endpoint );
 
 
 // Add the authorization to the headers
@@ -51,6 +54,9 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+// Get app container ID attribute
+const appContainer = (process.env.NODE_ENV === 'production') ? 'page' : 'root';
+
 /**
  * Render App to #root
  */
@@ -60,7 +66,7 @@ ReactDOM.render(
       <App />
     </Router>
   </ApolloProvider>,
-  document.getElementById('root'),
+  document.getElementById(appContainer),
 );
 
 

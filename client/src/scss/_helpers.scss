@@ -1,0 +1,24 @@
+/*
+  Helpers
+*/
+// min-size
+$min-width-slug: 'mnw' !default;
+$min-height-slug: 'mnh' !default;
+
+@for $i from 0 through 100 {
+  .#{$min-width-slug}-#{$i} {
+    min-width: 0% + $i;
+  }
+
+  .#{$min-height-slug}-#{$i} {
+    min-height: 0% + $i;
+  }
+
+  .#{$min-width-slug}-#{$i}vw {
+    min-width: 0vh + $i;
+  }
+
+  .#{$min-height-slug}-#{$i}vh {
+    min-height: 0vh + $i;
+  }
+}
