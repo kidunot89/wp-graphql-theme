@@ -42,13 +42,13 @@ services:
       WORDPRESS_DB_USER: "root"
       WORDPRESS_DEBUG: 1
       WORDPRESS_CONFIG_EXTRA: |
-        define( 'WP_DEFAULT_THEME', 'wpgraphql-theme-test' );
+        define( 'WP_DEFAULT_THEME', 'dev-theme' );
 
     networks:
       - "dev"
     volumes:
       - "./client/build:/var/www/html/wp-content/themes/wpgraphql-theme"
-      - "./client/public:/var/www/html/wp-content/themes/wpgraphql-theme-test"
+      - "./client/public:/var/www/html/wp-content/themes/dev-theme"
       - "./server/vendor/wp-graphql/wp-graphiql:/var/www/html/wp-content/plugins/wp-graphiql"
       - "./server/vendor/wp-graphql/wp-graphql:/var/www/html/wp-content/plugins/wp-graphql"
       - "./server/src:/var/www/html/wp-content/plugins/wpgraphql-settings"

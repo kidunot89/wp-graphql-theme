@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import Customizr from './customizr';
+import { WPCustomizr } from './components';
 import Body from './body';
 import RouteTest from './route-test';
 
@@ -52,7 +52,7 @@ class App extends Component {
     return (
       <Switch>
         <Route path="/customizr" render={props => (
-          <Customizr>
+          <WPCustomizr>
             <Body
               appUserProps={{
                 clearCurrentUser: this.clearCurrentUser,
@@ -61,7 +61,7 @@ class App extends Component {
               }}
               {...props}
             />
-          </Customizr>
+          </WPCustomizr>
         )} />
         <Route render={props => (
           <Body

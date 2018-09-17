@@ -1,18 +1,16 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withApollo, Query, Mutation } from 'react-apollo';
+import { withApollo, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Container, Row } from 'reactstrap';
-import { Header, Login, MainContent, Menu, Loading, Error } from './components';
-import Routes from './routes';
-import Stylist from './style';
+import { WPCore, WPRouter, WPTemplates } from './components';
 
 const BODY_QUERY = gql`
   query AppQuery {
-    generalSettings {
-      title
-      description
-      url
+    allSettings {
+      homeUrl
+      generalSettingsTitle
+      generalSettingsDescription
     }
     themeMods {
       customLogo{
@@ -38,25 +36,16 @@ const TOKEN_REFRESH_MUTATION = gql`
   }
 `;
 
+/**
+ * App Body Component
+ */
 class Body extends Component {
   constructor(props) {
     super(props);
     this.state = { loggedIn: false };
-    this.updateStyle = this.updateStyle.bind(this);
-  }
-
-  componentWillMount() {
-    const { client } = this.props;
-    this.updateStyle(client);
-  }
-
-  updateStyle(client) {
-    const stylist = new Stylist(client);
-    this.setState({ stylist });
   }
 
   render() {
-    const { stylist } = this.state;
     const { appUserProps, match } = this.props;
     return (
       <Container fluid className="app-body" style={{
@@ -65,15 +54,19 @@ class Body extends Component {
       }}>
         <Query query={BODY_QUERY}>
           {({ data, error, loading }) => {
-            if (loading) return (<Loading />);
-            if (error) return (<Error message={error.message} />);
+            if (loading) return (<WPTemplates.Loading page />);
+            if (error) return (<WPTemplates.Error page message={error.message} safe="Sorry, there was an loading this page. Please try again later." />);
             if (data) {
-              const { generalSettings, themeMods } = data;
+              const { allSettings: {
+                generalSettingsTitle: title,
+                generalSettingsDescription: description,
+                homeUrl: url,
+              }, themeMods } = data;
               return (
                 <Row>
-                  <Header
+                  <WPCore.Header
                     {...themeMods}
-                    {...generalSettings}
+                    {...{ title, description, url }}
                     logoProps={{
                       className: 'site-logo img-fluid p-2 mb-3',
                     }}
@@ -87,32 +80,29 @@ class Body extends Component {
                       className: 'd-flex flex-column align-items-stretch px-lg-2 header-row',
                     }}
                   >
-                    <Menu
+                    <WPTemplates.Menu
                       className="primary-menu"
                       location="primary"
                       match={match}
-                      siteUrl={generalSettings.url}
+                      siteUrl={url}
                       pills
                       vertical
-                      {...stylist.find('template-primaryMenu')}
                     />
-                    <Login
-                      {...stylist.find('template-login')}
+                    <WPTemplates.Login
                       {...appUserProps}
                     />
-                    <Menu
+                    <WPTemplates.Menu
                       className="social-menu"
                       location="social"
-                      match={match}
-                      siteUrl={generalSettings.url}
                       fill
-                      {...stylist.find('template-socialMenu')}
+                      {...{ match, siteUrl: url }}
                     />
-                    {/* <Sidebar name="sidebar" {...stylist('sidebar-app')}/> */}
-                  </Header>
-                  <MainContent {...stylist.find('core-main')}>
-                    <Routes match={match} stylist={stylist}/>
-                  </MainContent>
+                    {/* <WPTemplate.Sidebar name="sidebar" /> */}
+                  </WPCore.Header>
+                  <WPCore.Main>
+                    <WPRouter {...{ match }} />
+                    <WPCore.Footer />
+                  </WPCore.Main>
                 </Row>
               );
             }

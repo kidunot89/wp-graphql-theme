@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Row, Col } from 'reactstrap';
 
-class MainContent extends Component {
+import Footer from './footer';
+import Header from './header';
+
+class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -18,8 +20,8 @@ class MainContent extends Component {
             </Col>
           </Row>
         </Col>
-    )
+    );
   }
 }
 
-export default MainContent;
+export { Header, Footer, Main }

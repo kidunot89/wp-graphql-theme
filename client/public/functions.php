@@ -111,11 +111,26 @@
 		register_nav_menus(
 			array(
 				'primary' => __( 'Primary Menu' ),
-				'social' => __( 'Social Menu' )
+				'social' => __( 'Social Links Menu' )
 			 )
 		 );
 	 }
 	 add_action( 'after_setup_theme', 'twentyfifteen_setup' );
+
+	/**
+	 * Register widget area.
+	 */
+	function twentyfifteen_widgets_init() {
+		register_sidebar(
+			array(
+				'name'          => __( 'Widget Area', THEME_NAME ),
+				'id'            => 'sidebar-1',
+				'description'   => __( 'Add widgets here to appear in your sidebar.', THEME_NAME ),
+			)
+		);
+	}
+	add_action( 'widgets_init', 'twentyfifteen_widgets_init' );
+
 
 	/**
 	 * Queues up theme JS and CSS files to be loaded.
