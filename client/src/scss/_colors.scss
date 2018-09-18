@@ -50,9 +50,9 @@ $tertiary:  $cyan-500;
 $success:   $green;
 $info:      $cyan;
 $warning:   $yellow;
-$danger:    $red-700;
+$danger:    $red-300;
 $light:     $gray-100;
-$dark:      $gray-600;
+$dark:      $gray-700;
 
 // Color Map
 $theme-colors: (
@@ -75,9 +75,9 @@ $theme-colors: (
 );
 
 // Base Colors
-$body-bg: $dark;
-$body-color: $light;
-$headings-color: $gray-300;
+$body-bg: $gray-300;
+$body-color: $dark;
+$headings-color: $gray-800;
 $link-color: $primary;
 
 // Invert Colors

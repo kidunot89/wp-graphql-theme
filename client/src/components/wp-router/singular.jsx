@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
-import { WPTemplates } from '../'
+import { WPTemplates } from 'components/';
+import NotFound from './404';
 
 /**
  * Wordpress Singular Route Component
@@ -34,6 +35,8 @@ const Singular = (props) => {
       if (post_id) {
         return (<WPTemplates.Post {..._.omit(props, 'type')} id={post_id} />);
       }
+
+      return (<NotFound />);
   }
 }
 

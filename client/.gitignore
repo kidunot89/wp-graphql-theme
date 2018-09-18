@@ -16,6 +16,10 @@
 .env.test.local
 .env.production.local
 
+#VSCode
+.vscode
+jsconfig.json
+
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*

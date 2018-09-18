@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
-import { WPTemplates } from '../';
+import { WPTemplates } from 'components/';
 
 
 const archivePropTypes = {

@@ -8,19 +8,19 @@
     "@fortawesome/free-regular-svg-icons": "^5.3.1",
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/react-fontawesome": "^0.1.3",
-    "apollo-boost": "^0.1.15",
+    "apollo-boost": "^0.1.16",
     "bootstrap": "^4.1.3",
     "deepmerge": "^2.1.1",
-    "graphql": "^14.0.0",
+    "graphql": "^14.0.2",
     "html-to-react": "^1.3.3",
     "i": "^0.3.6",
     "npm": "^6.4.1",
     "radium": "^0.24.1",
-    "react": "^16.5.0",
+    "react": "^16.5.1",
     "react-animations": "^1.0.0",
     "react-apollo": "^2.1.11",
-    "react-device-detect": "^1.5.9",
-    "react-dom": "^16.5.0",
+    "react-device-detect": "^1.6.1",
+    "react-dom": "^16.5.1",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.5",
     "reactstrap": "^6.4.0"
@@ -36,9 +36,9 @@
   },
   "devDependencies": {
     "jest-dom": "^1.12.0",
-    "react-testing-library": "^5.0.1",
     "node-sass-chokidar": "^1.3.3",
-    "npm-run-all": "^4.1.3"
+    "npm-run-all": "^4.1.3",
+    "react-testing-library": "^5.0.1"
   },
   "proxy": {
     "/graphql": {

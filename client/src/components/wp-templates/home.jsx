@@ -1,12 +1,12 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { Post, Page } from '../post-type/';
+import { Post, Page } from './post-type/';
 
 /**
  * Wordpress Home Template-Part Front Page Component
  */
-class FrontPage extends Component {
+class HomePage extends Component {
   render() {
     const { limit } = this.props;
     return (
@@ -22,4 +22,4 @@ class FrontPage extends Component {
   }
 }
 
-export default FrontPage;
+export default HomePage;

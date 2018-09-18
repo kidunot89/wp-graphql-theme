@@ -65,24 +65,24 @@ class Header extends Component {
       headSectionProps, descriptionProps, titleProps, logoProps
     } = this.props;
     return (
-        <Col lg={3} className="header-container d-flex flex-fill pr-0">
-          <BrowserView>
-            <Container>
-              <Row className="justify-content-center">
-                {customLogo && <Logo {...customLogo} {...logoProps}/>}
-              </Row>
-              <Row className="justify-content-center">
-                {title && <Title content={title} {...titleProps}/>}
-              </Row>
-              <Row className="justify-content-center">
-                {description && <Description content={description} {...descriptionProps}/> }
-              </Row>
-              <Row {...headSectionProps}>
-                {children}
-              </Row>
-            </Container>
+        <Col lg={5} className="header-container d-flex flex-fill pr-0">
+          <BrowserView renderWithFragment>
+            <Row className="justify-content-end">
+              <Col lg="14" style={{ margin: '20% 0', padding: '0 15%' }}>
+                <Row className="justify-content-center" >
+                  {customLogo && <Logo {...customLogo} {...logoProps}/>}
+                </Row>
+                <Row className="justify-content-center">
+                  {title && <Title content={title} {...titleProps}/>}
+                  {description && <Description content={description} {...descriptionProps}/> }
+                </Row>
+                <Row {...headSectionProps}>
+                  {children}
+                </Row>
+              </Col>
+            </Row>
           </BrowserView>
-          <MobileView>
+          <MobileView renderWithFragment>
             <Row className="flex-nowrap justify-content-between py-3">
               <Col xs="auto">{title && <Title content={title} {...titleProps}/>}</Col>
               <Col xs="auto">

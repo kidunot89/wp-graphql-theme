@@ -1,11 +1,11 @@
-import Error from './error';
-import Loading from './loading';
+/**
+ * Wordpress Templates
+ */
 import Login from './login';
 import Menu from './menu';
 import Sidebar from './sidebar';
 import Widget from './widget';
 
 export {
-  Error, Loading, Login, Menu,
-  Sidebar, Widget
+  Login, Menu, Sidebar, Widget,
 };

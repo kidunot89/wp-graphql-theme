@@ -31,22 +31,29 @@ Run the following commands from your terminal in the project root directory.
 ## Test Folder Structure
 All tests are located in `./client/src/__tests__/` and created using [**React Testing Library**](https://github.com/kentcdodds/react-testing-library) and [**Jest**](https://jestjs.io) 
 
-* `__unit_tests__` - incomplete - Using Apollo's `MockedProvider` to simulate the WPGraphQL schema
+* `__core_tests__` - WPCore Components tests
+* `__customizr_tests__` - WPCustomizr Components tests
+* `__router_tests__` - WPRouter Components tests
+* `__templates_tests__` - WPTemplates Components tests
 
 ## Notes
 * The boilerplate JS Wordpress theme (`/client`) is a merger of three different projects. In one of them I use `tachyons.css` so you may come across many components with class names that do nothing. The design going forward using a custom themed version `Bootstrap 4 Sass` and `reactstrap`.
 * I wouldn't recommend changing anything but the contents `/client/public/inc/wp-graphql` in the `/client/public` directory. The contents `/client/public` handle WP theme function and SEO optimization on top of loading the JS application. Neither of which it does a great job at but it function a great base going forward.
 
-## TODO
-1. Finish creating mock data and update tests
+## Client-side TODO
+1. Create mock data and tests
 
-2. Finish boilerplate base design
+2. Write proper documentation
 
-3. Finish the Style Object - mutations
+3. Refactor WPRouter and WPTemplates Components w/ mobile support & `reactstrap`
 
-4. Redesign `Style` store functionality.
+4. Add transitions
 
-5. Create customizer tests
+5. Create WPCustomizr Components
 
-6. Create Customizr component.
+6. Add Gutenburg Support
 
+## Server-side TODO
+1. Add and polish sample data created by `WPGraphQL Test Settings`
+
+2. Add a Bootstrap 4 shortcode plugin.

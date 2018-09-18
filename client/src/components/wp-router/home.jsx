@@ -1,7 +1,7 @@
 import React, { Fragment, Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { WPTemplates } from '../';
+import { WPTemplates } from 'components/';
 
 /**
  * Wordpress Home Route Component
@@ -11,7 +11,7 @@ import { WPTemplates } from '../';
  * @returns {WPTemplates.PostsArchive}
  */
 const Home = (props) => {
-  const { pageOnFront, limit } = this.props;
+  const { pageOnFront, limit } = props;
   if (pageOnFront) {
     return (<WPTemplates.HomePage id={pageOnFront} />);
   }

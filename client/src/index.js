@@ -69,5 +69,4 @@ ReactDOM.render(
   document.getElementById(appContainer),
 );
 
-
 registerServiceWorker();

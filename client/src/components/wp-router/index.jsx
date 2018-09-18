@@ -4,10 +4,9 @@ import { Query } from 'react-apollo';
 import  { gql } from 'apollo-boost';
 import _ from 'lodash';
 
-import { WPTemplates } from '../';
+import { WPTemplates } from 'components/';
 
 // WordPress Router Components
-import NotFound from './404';
 import * as Archive from './archive';
 import Home from './home';
 import Search from './search';

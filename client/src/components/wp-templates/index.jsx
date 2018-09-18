@@ -1,11 +1,8 @@
 import PostsArchive from './archive';
 import HomePage from './home';
-import { Attachment, Page, Post } from './post-type';
-import { Error, Loading, Menu, Sidebar, Widget } from './other';
 import Search from './search';
+export * from './utils';
+export * from './post-type';
+export * from './other';
 
-export {
-  Attachment, Error, HomePage, Loading,
-  Menu, Page, Post, PostsArchive,
-  Search, Sidebar, Widget,
-};
+export { HomePage, PostsArchive, Search };

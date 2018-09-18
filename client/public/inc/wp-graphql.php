@@ -201,10 +201,10 @@
 		 * Holds the page_on_front setting
 		 * @var array $fields['pageOnFront']
 		 */
-		if( empty( $fields['pageOnFront'] ) || $fields['pageOnFront']['type'] === Types::post_object( 'page' ) ) {
+		if( empty( $fields['pageOnFront'] ) ) {
 
 			$fields[ 'pageOnFront' ] = [
-				'type' => Types::post_object( 'page' ),
+				'type' => Types::int(),
 				'description' => __( 'The page that should be displayed on the front page', THEME_NAME ),
 				'resolve' => function() {
 					$id = get_option( 'page_on_front' );
@@ -218,7 +218,7 @@
 		 * Holds the page_for_posts setting
 		 * @var array $fields['pageForPosts']
 		 */
-		if( empty( $fields['pageForPosts'] ) || $fields['pageForPosts']['type'] !== Types::int() ) { 
+		if( empty( $fields['pageForPosts'] ) ) { 
 			$fields[ 'pageForPosts' ] = [
 				'type' => Types::int(),
 				'description' => __( 'The page that displays posts', THEME_NAME ),

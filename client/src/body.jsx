@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withApollo, Query } from 'react-apollo';
 import gql from 'graphql-tag';
-import { Container, Row } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 import { WPCore, WPRouter, WPTemplates } from './components';
 
 const BODY_QUERY = gql`
@@ -77,7 +77,7 @@ class Body extends Component {
                       className: 'site-description text-lg-center',
                     }}
                     headSectionProps={{
-                      className: 'd-flex flex-column align-items-stretch px-lg-2 header-row',
+                      className: 'd-flex flex-column header-row',
                     }}
                   >
                     <WPTemplates.Menu
@@ -85,19 +85,23 @@ class Body extends Component {
                       location="primary"
                       match={match}
                       siteUrl={url}
+                      wrapper={Col}
+                      wrapperStyle={{ marginBottom: '20%' }}
+                      wrapperProps={{ xs: 'auto' }}
                       pills
                       vertical
                     />
-                    <WPTemplates.Login
-                      {...appUserProps}
-                    />
+                    <WPTemplates.Login {...appUserProps} wrapper={Col} wrapperProps={{ xs: 'auto' }} wrapperStyle={{ marginBottom: '20%' }} />
+                    <WPTemplates.Sidebar id="sidebar-1" wrapper={Col} wrapperProps={{ xs: 'auto' }} wrapperStyle={{ marginBottom: '20%' }} />
                     <WPTemplates.Menu
                       className="social-menu"
                       location="social"
+                      wrapper={Col}
+                      wrapperProps={{ xs: 'auto' }}
+                      wrapperStyle={{ marginBottom: '20%' }}
                       fill
                       {...{ match, siteUrl: url }}
                     />
-                    {/* <WPTemplate.Sidebar name="sidebar" /> */}
                   </WPCore.Header>
                   <WPCore.Main>
                     <WPRouter {...{ match }} />

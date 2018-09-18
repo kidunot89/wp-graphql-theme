@@ -387,11 +387,10 @@ class WidgetTypes extends TypeRegistry {
     $fields = [
       'title' => self::title_field(),
       'audio' => [
-        'type'        => Types::post_object( 'attachment' ),
+        'type'        => Types::int(),
         'description' => __( 'Widget audio file data object', 'wp-graphql' ),
         'resolve'     => function( array $widget ) {
-          return ( ! empty( $widget[ 'attachment_id' ] ) ) ?
-            DataSource::resolve_post_object( absint( $widget[ 'attachment_id' ] ) ) : null;
+          return ( ! empty( $widget['attachment_id'] ) ) ? $widget['attachment_id'] : null;
         }
       ],
       'preload' => [
@@ -418,7 +417,7 @@ class WidgetTypes extends TypeRegistry {
    * @return array
    */
   public static function calendar_config() {
-    $type_name = 'CalenderWidget';
+    $type_name = 'CalendarWidget';
 		$description = __( 'A calendar widget object', 'wp-graphql' );
     $fields = [ 'title' => self::title_field() ];
     
@@ -512,16 +511,17 @@ class WidgetTypes extends TypeRegistry {
         'description' => __( 'Random Order', 'wp-graphql'),
         'resolve'     => self::resolve_field( 'orderby_random', false ),
       ],
-      'images' => PostObjectConnectionDefinition::connection( DataSource::resolve_post_type( 'attachment' ), 'GalleryWidget' )
+      'images' => [
+        'type'        => Types::list_of( Types::int() ),
+        'description' => __( 'WP IDs of image attachment object', 'wp-graphql'),
+        'resolve'     => function( array $widget ) {
+          if ( ! empty( $widget['ids'] ) && is_array( $widget['ids'] ) ) {
+            return $widget['ids'];
+          }
+          return null;
+        }
+      ],
     ];
-
-    self::add_post_object_connection_query_args_filter( function( $query_args, $source, $args, $context, $info ) {
-      if ( ! empty( $source['type'] ) && $source['type'] === 'media_gallery' ) {
-        $query_args['post__in'] = $source['ids'];
-      }
-
-      return $query_args;
-    } );
 
     return self::create_type_config($type_name, $fields, [], $description );
   }
@@ -538,11 +538,10 @@ class WidgetTypes extends TypeRegistry {
 		$fields = [
       'title' => self::title_field(),
       'image' => [
-        'type'        => Types::post_object( 'attachment' ),
+        'type'        => Types::int(),
         'description' => __( 'Widget audio file data object', 'wp-graphql' ),
         'resolve'     => function( array $widget ) {
-          return ( ! empty( $widget[ 'attachment_id' ] ) ) ?
-            DataSource::resolve_post_object( absint( $widget[ 'attachment_id' ] ) ) : null;
+          return ( ! empty( $widget['attachment_id'] ) ) ? $widget['attachment_id'] : null;
         }
       ],
       'linkType' => [
@@ -588,11 +587,10 @@ class WidgetTypes extends TypeRegistry {
 		$fields = [
       'title' => self::title_field(),
       'menu' => [
-        'type'        => Types::menu(),
+        'type'        => Types::int(),
         'description' => __( 'Widget navigation menu', 'wp-graphql' ),
         'resolve'     => function( array $widget ) {
-          return ( ! empty( $widget[ 'nav_menu' ] ) ) ?
-            DataSource::resolve_term_object( absint( $widget[ 'nav_menu' ] ), 'nav_menu' ) : null;
+          return ( ! empty( $widget['nav_menu'] ) ) ? $widget['nav_menu'] : null;
         }
       ]
     ];
@@ -807,11 +805,10 @@ class WidgetTypes extends TypeRegistry {
 		$fields = [
       'title' => self::title_field(),
       'video' => [
-        'type'        => Types::post_object( 'attachment' ),
+        'type'        => Types::int(),
         'description' => __( 'Widget video file data object', 'wp-graphql' ),
         'resolve'     => function( array $widget ) {
-          return ( ! empty( $widget[ 'attachment_id' ] ) ) ?
-            DataSource::resolve_post_object( absint( $widget[ 'attachment_id' ] ) ) : null;
+          return ( ! empty( $widget[ 'attachment_id' ] ) ) ? $widget['attachment_id'] : null;
         }
       ],
       'preload' => [
