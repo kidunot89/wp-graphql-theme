@@ -15,9 +15,7 @@ const LoadingComponent = props => {
   const {
     as: Container, 
     className,
-    fault,
     message,
-    debugMsg,
     altIcon: AltIcon,
     iconSize
   } = props;

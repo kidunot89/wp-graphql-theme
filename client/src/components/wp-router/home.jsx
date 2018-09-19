@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { WPTemplates } from 'components/';
@@ -15,13 +15,10 @@ const Home = (props) => {
   if (pageOnFront) {
     return (<WPTemplates.HomePage id={pageOnFront} />);
   }
-  return (<WPTemplates.PostsArchive first={limit} />)
+  return (<WPTemplates.Archive first={limit} />)
 }
 
 Home.propTypes = {
-  match: PropTypes.shape({}).isRequired,
-  location: PropTypes.shape({}).isRequired,
-  history: PropTypes.shape({}).isRequired,
   limit: PropTypes.number.isRequired,
   pageOnFront: PropTypes.number,
 };

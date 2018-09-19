@@ -45,10 +45,12 @@ class WidgetTypes extends TypeRegistry {
      * Initialize return array and default enum types
      */
     $types = [
+      self::archive_group_enum(),
       self::image_size_enum(),
       self::link_to_enum(),
       self::preload_enum(),
       self::sortby_enum(),
+      self::taxonomy_enum(),
     ];
 
     /**
@@ -249,11 +251,11 @@ class WidgetTypes extends TypeRegistry {
    *
    * @return array
    */
-  public static function title_field() {
+  public static function title_field($default = '') {
     return array(
       'type' => Types::string(),
       'description' => __( 'Display name of widget', 'wp-graphql' ),
-      'resolve' => self::resolve_field( 'title', '' ),
+      'resolve' => self::resolve_field( 'title', $default ),
     );
   }
 
@@ -261,7 +263,14 @@ class WidgetTypes extends TypeRegistry {
     add_filter( 'graphql_post_object_connection_query_args', $filter, 10, 5 );
   }
 
-    /**
+  /**
+   * Store archive group EnumType used by archive widget
+   *
+   * @var EnumType
+   */
+  private static $archive_group_enum;
+
+  /**
    * Stores image size EnumType used by gallery and image widgets
    *
    * @var EnumType
@@ -288,6 +297,28 @@ class WidgetTypes extends TypeRegistry {
    * @var EnumType
    */
   private static $sortby_enum;
+
+  /**
+   * Stores taxonomy EnumType used by tag cloud widget
+   * 
+   * @var EnumType
+   */
+  private static $taxonomy_enum;
+
+  /**
+   * Defines and registers archive_group enumeration type
+   * 
+   * @return EnumType
+   */
+  public static function archive_group_enum() {
+    return self::$archive_group_enum ?: self::$archive_group_enum = new WPEnumType(
+      array(
+        'name' => 'ArchiveGroupEnum',
+        'description' => __( 'Grouping types', THEME_NAME ),
+        'values' => array( 'YEARLY', 'MONTHLY', 'DAILY', 'WEEKLY', 'POSTBYPOST', 'ALPHA' )
+      )
+    );
+  }
 
   /**
    * Defines and register image_size enumeration type
@@ -350,6 +381,21 @@ class WidgetTypes extends TypeRegistry {
   }
 
   /**
+   * Defines and register taxonomy enumeration type
+   *
+   * @return WPEnumType
+   */
+  public static function taxonomy_enum() {
+    return self::$taxonomy_enum ?: self::$taxonomy_enum = new WPEnumType(
+      array(
+        'name' => 'TagCloudEnum',
+        'description' => __( 'Taxonomy of widget resource type', 'wp-graphql' ),
+        'values' => array( 'POST_TAG', 'CATEGORY', 'LINK_CATEGORY' )
+      )
+    );
+  }
+
+  /**
    * Defines Archives widget type
    *
    * @since 0.0.31
@@ -359,7 +405,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'ArchivesWidget';
     $description = __( 'An archives widget object', 'wp-graphql' );
     $fields = [
-      'title'     => self::title_field(),
+      'title'     => self::title_field('Archives'),
       'count'     => [
         'type'        => Types::boolean(),
         'description' => __( 'Show posts count', 'wp-graphql' ),
@@ -369,6 +415,33 @@ class WidgetTypes extends TypeRegistry {
         'type'        => Types::boolean(),
         'description' => __( 'Display as dropdown', 'wp-graphql' ),
         'resolve'     => self::resolve_field( 'dropdown', false )
+      ],
+      'urls'      => [
+        'type'        => Types::list_of( Types::string () ),
+        'args'        => [
+          'group' => [ 
+            'type'        => self::archive_group_enum(),
+            'description' => __( 'How archives should be group', THEME_NAME ),
+          ],
+          'full'  => [
+            'type'        => Types::boolean(),
+            'description' => __( 'Full URL?', THEME_NAME ),
+          ] 
+        ],
+        'description' => __( 'List of relative urls to archive listing', THEME_NAME ),
+        'resolve'     => function( $root, $args ) {
+          $full = ( ! empty( $args['full'] ) ) ? $args['full'] : false;
+
+          // If group is set
+          if ( ! empty( $args['group'] ) ) { 
+            $urls = ExtraSource::resolve_archive_urls( strtolower( $args['group'] ), $full );
+
+          } else { 
+            $urls = ExtraSource::resolve_archive_urls( 'monthly', $full );
+          }
+          
+          return ! empty ( $urls ) ? $urls : null;
+        }
       ]
     ];
 
@@ -385,7 +458,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'AudioWidget';
     $description = __( 'An audio widget object', 'wp-graphql' );
     $fields = [
-      'title' => self::title_field(),
+      'title' => self::title_field('Audio'),
       'audio' => [
         'type'        => Types::int(),
         'description' => __( 'Widget audio file data object', 'wp-graphql' ),
@@ -419,7 +492,7 @@ class WidgetTypes extends TypeRegistry {
   public static function calendar_config() {
     $type_name = 'CalendarWidget';
 		$description = __( 'A calendar widget object', 'wp-graphql' );
-    $fields = [ 'title' => self::title_field() ];
+    $fields = [ 'title' => self::title_field('Calendar') ];
     
 		return self::create_type_config($type_name, $fields, [], $description );
   }
@@ -434,7 +507,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'CategoriesWidget';
 		$description = __( 'A categories widget object', 'wp-graphql' );
 		$fields = [
-      'title'     => self::title_field(),
+      'title'     => self::title_field('Categories'),
       'count'     => [
         'type'        => Types::boolean(),
         'description' => __( 'Show posts count', 'wp-graphql' ),
@@ -465,7 +538,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'CustomHTMLWidget';
 		$description = __( 'A custom html widget object', 'wp-graphql' );
 		$fields = [
-      'title'     => self::title_field(),
+      'title'     => self::title_field('Custom HTML'),
       'content'     => [
         'type'        => Types::string(),
         'description' => __( 'Content of custom html widget', 'wp-graphql' ),
@@ -486,7 +559,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'GalleryWidget';
 		$description = __( 'A gallery widget object', 'wp-graphql' );
 		$fields = [
-      'title'   => self::title_field(),
+      'title'   => self::title_field('Gallery'),
       'columns' => [
         'type'        => Types::int(),
         'description' => __( 'Number of columns in gallery showcase', 'wp-graphql' ),
@@ -536,7 +609,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'ImageWidget';
 		$description = __( 'A image widget object', 'wp-graphql' );
 		$fields = [
-      'title' => self::title_field(),
+      'title' => self::title_field('Image'),
       'image' => [
         'type'        => Types::int(),
         'description' => __( 'Widget audio file data object', 'wp-graphql' ),
@@ -570,7 +643,7 @@ class WidgetTypes extends TypeRegistry {
   public static function meta_config() {
     $type_name = 'MetaWidget';
 		$description = __( 'A meta widget object', 'wp-graphql' );
-    $fields = [ 'title' => self::title_field() ];
+    $fields = [ 'title' => self::title_field('Meta') ];
     
     return self::create_type_config($type_name, $fields, [], $description );
   }
@@ -585,7 +658,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'NavMenuWidget';
 		$description = __( 'A navigation menu widget object', 'wp-graphql' );
 		$fields = [
-      'title' => self::title_field(),
+      'title' => self::title_field('Navigation'),
       'menu' => [
         'type'        => Types::int(),
         'description' => __( 'Widget navigation menu', 'wp-graphql' ),
@@ -608,7 +681,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'PagesWidget';
 		$description = __( 'A pages widget object', 'wp-graphql' );
 		$fields = [
-      'title'   => self::title_field(),
+      'title'   => self::title_field('Pages'),
       'sortby' => [
         'type'        => self::sortby_enum(),
         'description' => __( 'Sort style of widget', 'wp-graphql' ),
@@ -638,7 +711,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'RecentCommentsWidget';
 		$description = __( 'A recent comments widget object', 'wp-graphql' );
 		$fields = [
-      'title'   => self::title_field(),
+      'title'   => self::title_field('Recent Comments'),
       'commentsPerDisplay' => [
         'type'        => Types::int(),
         'description' => __( 'Number of comments to display at one time', 'wp-graphql' ),
@@ -659,7 +732,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'RecentPostsWidget';
 		$description = __( 'A recent posts widget object', 'wp-graphql' );
 		$fields = [
-      'title'   => self::title_field(),
+      'title'   => self::title_field('Recent Posts'),
       'postsPerDisplay' => [
         'type'        => Types::int(),
         'description' => __( 'Number of posts to display at one time', 'wp-graphql' ),
@@ -685,7 +758,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'RSSWidget';
 		$description = __( 'A rss feed widget object', 'wp-graphql' );
 		$fields = [
-      'title'   => self::title_field(),
+      'title'   => self::title_field('RSS'),
       'url' => [
         'type'        => Types::string(),
         'description' => __( 'Url of RSS/Atom feed', 'wp-graphql' ),
@@ -730,7 +803,7 @@ class WidgetTypes extends TypeRegistry {
   public static function search_config() {
     $type_name = 'SearchWidget';
 		$description = __( 'A search widget object', 'wp-graphql' );
-		$fields = [ 'title'   => self::title_field() ];
+		$fields = [ 'title'   => self::title_field('Search') ];
     
     return self::create_type_config($type_name, $fields, [], $description );
   }
@@ -745,17 +818,38 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'TagCloudWidget';
 		$description = __( 'A tag cloud widget object', 'wp-graphql' );
 		$fields = [
-      'title'     => self::title_field(),
+      'title'     => self::title_field('Tag Cloud'),
       'showCount' => [
         'type'        => Types::boolean(),
         'description' => __( 'Show tag count', 'wp-graphql' ),
         'resolve'     => self::resolve_field( 'count', true )
       ],
       'taxonomy'  => [
-        'type'        => Types::taxonomy(),
+        'type'        => self::taxonomy_enum(),
         'description' => __( 'Widget taxonomy type', 'wp-graphql' ),
         'resolve'     => function( array $widget ) {
           return ( ! empty( $widget[ 'taxonomy' ] ) ) ? strtoupper( $widget[ 'taxonomy' ] ) : 'POST_TAG';
+        }
+      ],
+      'tags'  => [
+        'type'        => Types::list_of( Types::id() ),
+        'args'        => [
+          'orderbyName'  => [
+            'type'        => Types::boolean(),
+            'description' => __( 'Sort by name', THEME_NAME ),
+          ],
+        ],
+        'description' => __( 'Widget taxonomy type', 'wp-graphql' ),
+        'resolve'     => function( array $widget, $args ) {
+          $orderby_name = ( ! empty( $args['orderbyName'] ) ) ? $args['orderbyName'] : false;
+
+          if( ! empty( $widget[ 'taxonomy' ] ) ) {
+            $tags = ExtraSource::resolve_tag_cloud( $widget[ 'taxonomy' ], $orderby_name );
+          } else {
+            $tags = ExtraSource::resolve_tag_cloud( 'post_tag', $orderby_name );
+          }
+
+          return ! empty( $tags ) ? $tags : null;
         }
       ],
     ];
@@ -773,7 +867,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'TextWidget';
 		$description = __( 'A text widget object', 'wp-graphql' );
 		$fields = [
-      'title'   => self::title_field(),
+      'title'   => self::title_field('Text'),
       'text' => [
         'type'        => Types::string(),
         'description' => __( 'Text content of widget', 'wp-graphql' ),
@@ -803,7 +897,7 @@ class WidgetTypes extends TypeRegistry {
     $type_name = 'VideoWidget';
 		$description = __( 'A video widget object', 'wp-graphql' );
 		$fields = [
-      'title' => self::title_field(),
+      'title' => self::title_field('Video'),
       'video' => [
         'type'        => Types::int(),
         'description' => __( 'Widget video file data object', 'wp-graphql' ),

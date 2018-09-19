@@ -8,10 +8,6 @@ import { Error, Loading, Widget, wrapper } from 'components/wp-templates';
 import SIDEBAR_QUERY from './query';
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { id } = this.props;
 
@@ -19,7 +15,7 @@ class Sidebar extends Component {
       <Row className="flex-column align-items-stretch">
         <Query query={SIDEBAR_QUERY} variables={{ id }}>
           {({ data, loading, error, refetch }) => {
-            if (loading) return (<Loading page />);
+            if (loading) return (<Loading iconSize="3x" />);
             if (error) return (<Error fault="query" debugMsg={error.message} as={Col} xs="auto" />);
             
             if(data && data.sidebarBy) {
@@ -30,6 +26,7 @@ class Sidebar extends Component {
                   type={__typename}
                   wrapper={Col}
                   wrapperProps={{ xs: 'auto' }}
+                  key={id}
                 />
               ));
             }

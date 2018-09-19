@@ -4,6 +4,7 @@
 
   use GraphQL\Type\Definition\ResolveInfo;
   use GraphQL\Error\UserError;
+  use GraphQLRelay\Relay;
   use WPGraphQL\AppContext;
   use WPGraphQL\Type\Sidebar\Connection\SidebarConnectionResolver;
   use WPGraphQL\Type\Widget\Connection\WidgetConnectionResolver;
@@ -289,6 +290,71 @@
       }
 
       return $types;
+    }
+
+    /**
+     * Returns an array of archive urls base of type 
+     *
+     * @param string $type - grouping style
+     * @param bool $full - returns full url if true
+     * @return array
+     */
+    public static function resolve_archive_urls( $type = 'monthly', $full = false ) {
+
+      /** 
+       * Get raw archives output
+       */
+      $args = array(
+        'type'            => $type,
+        'limit'           => '',
+        'format'          => 'option', 
+        'before'          => '',
+        'after'           => '',
+        'show_post_count' => false,
+        'echo'            => false,
+        'order'           => 'DESC',
+        'post_type'     	=> 'post'
+      );
+      $raw_html_output = wp_get_archives( $args );
+
+      /**
+       * Strip site url if $full === true
+       */
+      $homeUrl = ( false === $full ) ? preg_quote( home_url() . '/', '/' ) : '';
+
+      preg_match_all("/<option value=(?:\"|\')(?:{$homeUrl})(.*)(?:\"|\')>.*<\/option>/", $raw_html_output, $urls);
+
+      return $urls[1];
+    }
+
+    /**
+     * Return array of term - Relay global ids 
+     *
+     * @param string $taxonomy
+     * @param string $orderby
+     * @return array
+     */
+    public static function resolve_tag_cloud( $taxonomy = 'post_tag', $orderby_name ) {
+      $args = array(
+        'orderby'                   => $orderby_name ? 'name' : 'count', 
+        'order'                     => 'ASC',
+        'taxonomy'                  => $taxonomy, 
+        'echo'                      => false,
+        'child_of'                  => null, // see Note!
+      );
+
+      $raw_html_output = wp_tag_cloud($args);
+
+      $homeUrl = preg_quote( home_url() . '/tag/', '/' );
+
+      preg_match_all("/tag-link-([0-9]+) /", $raw_html_output, $ids);
+
+      $term_ids = [];
+      foreach( $ids[1] as $id ) {
+        $term_ids[] = (int) $id;
+      }
+      
+      return $term_ids;
     }
 
   }

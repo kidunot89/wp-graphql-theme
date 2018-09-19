@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { WPCustomizr } from './components';
 import Body from './body';
-import RouteTest from './route-test';
 
 import './app.css';
 
@@ -33,7 +32,6 @@ class App extends Component {
    * Retrieves existing authentication token and sets user state
    */
   returningUser() {
-    const { client } = this.props;
     const authToken = localStorage.getItem('user-token');
     this.setState({ authToken, loggedIn: true });
   }
@@ -51,15 +49,15 @@ class App extends Component {
     const { loggedIn } = this.state;
     return (
       <Switch>
-        <Route path="/customizr" render={props => (
+        <Route path="/:customizr(customizr)" render={({ match: { params } }) => (
           <WPCustomizr>
             <Body
               appUserProps={{
                 clearCurrentUser: this.clearCurrentUser,
+                customizr: true,
                 setCurrentUser: this.setCurrentUser,
                 loggedIn,
               }}
-              {...props}
             />
           </WPCustomizr>
         )} />
@@ -70,7 +68,6 @@ class App extends Component {
               setCurrentUser: this.setCurrentUser,
               loggedIn,
             }}
-            {...props}
           />
         )} />
       </Switch>

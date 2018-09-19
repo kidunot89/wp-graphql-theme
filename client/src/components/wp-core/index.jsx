@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Row, Col } from 'reactstrap';
+import { Container, Row, Col } from 'reactstrap';
 
 import Footer from './footer';
 import Header from './header';
@@ -14,10 +14,8 @@ class Main extends Component {
     const { children } = this.props;
     return (
         <Col>
-          <Row className="flex-column align-items-center mt-3 mb-2">
-            <Col xs={10}>
-              {children}
-            </Col>
+          <Row>
+            {children}
           </Row>
         </Col>
     );

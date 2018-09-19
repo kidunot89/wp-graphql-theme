@@ -62,16 +62,13 @@ class Menu extends Component {
   }
 
   isExtLink(url) {
-    console.log(url, this.props.siteUrl)
-    console.log( 'isExtLink', false === url.startsWith(this.props.siteUrl) );
     return false === url.startsWith(this.props.siteUrl);
   }
 
   formatUrl(rawUrl) {
     if ( rawUrl.startsWith(this.props.siteUrl) ) {
-      const { siteUrl, match: { url } } = this.props
-      const rootUrl = (url === '/') ? '' : url;
-      return `${rootUrl}/${rawUrl.substring(`${siteUrl}/`.length)}`;
+      const { siteUrl, root } = this.props
+      return `${root}/${rawUrl.substring(`${siteUrl}/`.length)}`;
     }
 
     return rawUrl;
@@ -100,6 +97,9 @@ class Menu extends Component {
     return (<MenuItem {...{ url, external, label }} key={`${label}-${index}`} />);
   }
 
+  /**
+   * 
+   */
   subMenu({ url, external, label, items } ) {
     return (
       <ButtonGroup className="nav-item" role="group">
@@ -108,59 +108,39 @@ class Menu extends Component {
         <UncontrolledDropdown nav direction="right">
           <DropdownToggle caret nav className="btn nav-link" />
           <DropdownMenu>
-            {_.map(items, ({ label, url: rawUrl }) => {
+            {_.map(items, ({ id, label, url: rawUrl }) => {
               
               // Format Url
               const external = this.isExtLink(rawUrl);
               const url = this.formatUrl(rawUrl);
 
-              if (external) {
-                return (
-                  <DropdownItem tag="a" href={url}><Label url={url} content={label} /></DropdownItem>
-                );
-              }
-          
-              return(
-                <DropdownItem tag={NavLink} to={url} activeClassName="active"><Label url={url} content={label} /></DropdownItem>
+              return (external) ? (
+                <DropdownItem key={id} tag="a" href={url}>
+                  <Label url={url} content={label} />
+                </DropdownItem>
+              ) : (
+                <DropdownItem key={id} tag={NavLink} to={url} activeClassName="active">
+                  <Label url={url} content={label} />
+                </DropdownItem>
               );
             })}
           </DropdownMenu>
         </UncontrolledDropdown>
       </ButtonGroup>
     );
-    // return (
-    //   <UncontrolledDropdown
-    //     nav
-    //     direction="down"
-    //     tag="a"
-    //   >
-    //     <DropdownToggle nav caret>
-    //       {children}
-    //     </DropdownToggle>
-    //     <DropdownMenu>
-    //       {_.map( items, ({ url, label }, index) => {
-    //         return (<DropdownItem><MenuItem {...{ label, url }} key={`${label}-${index}`} /></DropdownItem>)
-    //       })}
-    //     </DropdownMenu>
-    //   </UncontrolledDropdown>
-    // );
   }
 
   /**
    * 
    */
-  menuItem({ url, external, label }) {
-    if (external) {
-      return (
-        <NavItem>
-          <ExtLink href={url}><Label url={url} content={label} /></ExtLink>
-        </NavItem>
-      );
-    }
-
+  menuItem({ id, url, external, label }) {
     return(
-      <NavItem>
-        <NavLink to={url} className="nav-link" activeClassName="active"><Label url={url} content={label} /></NavLink>
+      <NavItem key={id}>
+        { 
+          external ? 
+          <ExtLink href={url}><Label url={url} content={label} /></ExtLink> :
+          <NavLink to={url} className="nav-link" activeClassName="active"><Label url={url} content={label} /></NavLink>
+        }
       </NavItem>
     );
   }
@@ -172,7 +152,7 @@ class Menu extends Component {
       <Nav { ...navProps}>
         <Query query={MENU_QUERY} variables={{ location: this.props.location.toUpperCase() }}>
           {({ data, error, loading }) => {
-            if (loading) return (<Loading page />);
+            if (loading) return (<Loading iconSize="3x" />);
             if (error) return (<Error fault="query" debugMsg={error.message} />);
 
             if (data && data.menus) {
@@ -196,12 +176,12 @@ class Menu extends Component {
 
 Menu.propTypes = {
   location: PropTypes.string.isRequired,
-  match: PropTypes.shape({}),
+  root: PropTypes.string,
   siteUrl: PropTypes.string,
 };
 
 Menu.defaultProps = {
-  match: undefined,
+  root: '',
   siteUrl: '',
 }
 

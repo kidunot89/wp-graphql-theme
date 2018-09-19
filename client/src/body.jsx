@@ -46,7 +46,7 @@ class Body extends Component {
   }
 
   render() {
-    const { appUserProps, match } = this.props;
+    const { appUserProps, customizr } = this.props;
     return (
       <Container fluid className="app-body" style={{
         minHeight: '100vh',
@@ -54,14 +54,18 @@ class Body extends Component {
       }}>
         <Query query={BODY_QUERY}>
           {({ data, error, loading }) => {
-            if (loading) return (<WPTemplates.Loading page />);
-            if (error) return (<WPTemplates.Error page message={error.message} safe="Sorry, there was an loading this page. Please try again later." />);
+            if (loading) return (<WPTemplates.Loading />);
+            if (error) return (<WPTemplates.Error fault="query" debugMsg={error.message} />);
             if (data) {
+
               const { allSettings: {
                 generalSettingsTitle: title,
                 generalSettingsDescription: description,
                 homeUrl: url,
               }, themeMods } = data;
+              
+              const root = (customizr) ? '' : '/customizer';
+
               return (
                 <Row>
                   <WPCore.Header
@@ -83,13 +87,12 @@ class Body extends Component {
                     <WPTemplates.Menu
                       className="primary-menu"
                       location="primary"
-                      match={match}
-                      siteUrl={url}
                       wrapper={Col}
                       wrapperStyle={{ marginBottom: '20%' }}
                       wrapperProps={{ xs: 'auto' }}
                       pills
                       vertical
+                      {...{ root, siteUrl: url }}
                     />
                     <WPTemplates.Login {...appUserProps} wrapper={Col} wrapperProps={{ xs: 'auto' }} wrapperStyle={{ marginBottom: '20%' }} />
                     <WPTemplates.Sidebar id="sidebar-1" wrapper={Col} wrapperProps={{ xs: 'auto' }} wrapperStyle={{ marginBottom: '20%' }} />
@@ -100,11 +103,11 @@ class Body extends Component {
                       wrapperProps={{ xs: 'auto' }}
                       wrapperStyle={{ marginBottom: '20%' }}
                       fill
-                      {...{ match, siteUrl: url }}
+                      {...{ root, siteUrl: url }}
                     />
                   </WPCore.Header>
                   <WPCore.Main>
-                    <WPRouter {...{ match }} />
+                    <WPRouter {...{ root }} />
                     <WPCore.Footer />
                   </WPCore.Main>
                 </Row>
@@ -118,9 +121,12 @@ class Body extends Component {
 }
 
 Body.propTypes = {
-  client: PropTypes.shape({}).isRequired,
   appUserProps: PropTypes.shape({}).isRequired,
-  match: PropTypes.shape({}).isRequired,
+  customizr: PropTypes.bool,
 };
 
-export default withApollo(Body);
+Body.defaultProps = {
+  customizr: false,
+}
+
+export default Body;

@@ -9447,23 +9447,6 @@ body {
 #page {
   display: block; }
 
-@media (min-width: 993px) {
-  .app-body {
-    position: relative; }
-    .app-body::before {
-      content: "";
-      position: relative;
-      width: 100%;
-      min-height: 1px;
-      padding-right: 15px;
-      padding-left: 15px;
-      flex: 0 0 31.25%;
-      max-width: 31.25%;
-      position: fixed;
-      background-color: #f8f9fa;
-      border-right: 0.085em solid #cdd3d9;
-      height: 100vh; } }
-
 .site-title {
   position: relative;
   font-family: "Noto Sans", sans-serif;
@@ -9478,6 +9461,24 @@ body {
   margin: 0.5em 0 0;
   opacity: 0.7; }
 
+.entry {
+  background-color: #f8f9fa; }
+  .entry .entry-header {
+    padding: 0 7.6923%; }
+    .entry .entry-header .entry-title {
+      font-size: 2.6rem;
+      line-height: 1.1538;
+      margin-bottom: .9231em;
+      clear: both;
+      font-weight: 700; }
+  .entry .entry-content {
+    padding: 0 7.6923% 7.6923%; }
+    .entry .entry-content h2 {
+      font-size: 2.2rem;
+      line-height: 1.3636;
+      margin-top: 2.1818em;
+      margin-bottom: 1.0909em; }
+
 .primary-menu, .social-menu {
   position: relative; }
   .primary-menu::before, .primary-menu::after, .social-menu::before, .social-menu::after {
@@ -9486,25 +9487,41 @@ body {
     width: 100%;
     height: 2em; }
 
-.customizr {
-  position: relative;
-  min-height: 100vh; }
-  .customizr .panel {
-    position: absolute !important;
-    z-index: 5;
-    background-color: #00AD8B;
-    opacity: 0.7; }
+@media (min-width: 576px) {
+  .entry .entry-header .entry-title {
+    font-size: 3.5rem;
+    line-height: 1.2;
+    margin-bottom: 1.2em; }
+  .customizr {
+    position: relative;
+    min-height: 100vh; }
+    .customizr .panel {
+      position: absolute !important;
+      z-index: 5;
+      background-color: #00AD8B;
+      opacity: 0.7; } }
 
-@media (max-width: 768px) {
-  .customizr .panel {
-    left: 0;
-    bottom: 0;
-    min-width: 100vw;
-    height: 40vh;
-    overflow-x: scroll;
-    overflow-y: hidden; } }
-
-@media (min-width: 769px) {
+@media (min-width: 768px) {
+  .entry {
+    margin: 0 7.6923% 7.6923%;
+    padding-top: 7.6923%;
+    box-shadow: 0 0 1px #cdd3d9;
+    border-radius: 0.1em; }
+    .entry:first-of-type {
+      margin: 7.6923% 7.6923%; }
+    .entry .entry-header {
+      padding: 0 9.0909%; }
+      .entry .entry-header .entry-title {
+        font-size: 3.9rem;
+        line-height: 1.2308;
+        margin-bottom: 1.2308em; }
+    .entry .entry-content {
+      padding: 0 9.0909% 9.0909%; }
+      .entry .entry-content h2 {
+        font-size: 2.9rem;
+        line-height: 1.2069;
+        margin-top: 1.931em;
+        margin-bottom: .9655em; }
   .customizr {
     display: flex;
     flex-wrap: wrap;
@@ -9524,3 +9541,56 @@ body {
       min-height: 100vh;
       overflow-x: hidden;
       overflow-y: scroll; } }
+
+@media (min-width: 992px) {
+  .app-body {
+    position: relative; }
+    .app-body::before {
+      content: "";
+      position: relative;
+      width: 100%;
+      min-height: 1px;
+      padding-right: 15px;
+      padding-left: 15px;
+      flex: 0 0 31.25%;
+      max-width: 31.25%;
+      position: fixed;
+      background-color: #f8f9fa;
+      border-right: 0.085em solid #cdd3d9;
+      height: 100vh; }
+  .entry {
+    margin: 0 8.3333% 8.3333%;
+    padding-top: 8.3333%; }
+    .entry:first-of-type {
+      margin: 8.3333% 8.3333%; }
+    .entry .entry-header {
+      padding: 0 10%; }
+      .entry .entry-header .entry-title {
+        font-size: 3.1rem;
+        line-height: 1.1613;
+        margin-bottom: 1.1613em; }
+    .entry .entry-content {
+      padding: 0 10% 10%; }
+      .entry .entry-content h2 {
+        font-size: 2.9rem;
+        line-height: 1.2069;
+        margin-top: 1.931em;
+        margin-bottom: .9655em; }
+  .customizr .panel {
+    left: 0;
+    bottom: 0;
+    min-width: 100vw;
+    height: 40vh;
+    overflow-x: scroll;
+    overflow-y: hidden; } }
+
+@media (min-width: 1200px) {
+  .entry .entry-header .entry-title {
+    font-size: 3.9rem;
+    line-height: 1.2308;
+    margin-bottom: 1.2308em; }
+  .entry .entry-header .entry-content h2 {
+    font-size: 3.2rem;
+    line-height: 1.25;
+    margin-top: 2em;
+    margin-bottom: 1em; } }

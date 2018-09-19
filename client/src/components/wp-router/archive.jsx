@@ -1,60 +1,79 @@
-import React, { Component, Fragment } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import { WPTemplates } from 'components/';
 
-
+/**
+ * 
+ */
 const archivePropTypes = {
   limit: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
 };
 
-const Author = ({ limit, name }) => {
+/**
+ * 
+ */
+const ByAuthor = ({ limit, name }) => {
   const props = {
     first: limit, 
     where: { author: name }
   };
 
-  return (<WPTemplates.PostsArchive {...props} />);
+  return (<WPTemplates.Archive {...props} />);
 }
+ByAuthor.propTypes = archivePropTypes;
 
-Author.propTypes = archivePropTypes;
-
-const Category = ({ limit, name }) => {
+/**
+ * 
+ */
+const ByCategory = ({ limit, name }) => {
   const props = {
     first: limit, 
     where: { category: name }
   };
 
-  return (<WPTemplates.PostsArchive {...props} />);
+  return (<WPTemplates.Archive {...props} />);
 }
+ByCategory.propTypes = archivePropTypes;
 
-Category.propTypes = archivePropTypes;
-
-const Post = ({ month, limit, year }) => {
+/**
+ * 
+ */
+const ByDate = ({ monthnum, limit, year }) => {
   const props = {
     first: limit, 
-    where: { month: parseInt(month, 10), year: parseInt(year, 10) }
+    where: { 
+      month: monthnum ? parseInt(monthnum, 10) : undefined,
+      year: parseInt(year, 10),
+    }
   };
 
-  return (<WPTemplates.PostsArchive {...props} />);
+  return (<WPTemplates.Archive {...props} />);
 }
-
-Post.propTypes = {
+ByDate.propTypes = {
   limit: PropTypes.number.isRequired,
   year: PropTypes.string.isRequired,
-  month: PropTypes.string.isRequired,
+  monthnum: PropTypes.string,
+};
+ByDate.defaultProps = {
+  monthnum: undefined,
 };
 
-const Tag = ({ limit, name }) => {
+/**
+ * 
+ */
+const ByTag = ({ limit, name }) => {
   const props = {
     first: limit, 
     where: { tag: name }
   };
 
-  return (<WPTemplates.PostsArchive {...props} />);
+  return (<WPTemplates.Archive {...props} />);
 }
+ByTag.propTypes = archivePropTypes;
 
-Tag.propTypes = archivePropTypes;
+const Latest = ({ limit }) => (<WPTemplates.Archive first={limit} />);
+Latest.propTypes = { limit: PropTypes.number.isRequired };
 
-export { Author, Category, Post, Tag };
+export { ByAuthor, ByCategory, ByDate, ByTag, Latest };

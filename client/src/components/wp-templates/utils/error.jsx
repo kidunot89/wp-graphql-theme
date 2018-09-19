@@ -72,7 +72,11 @@ const ErrorComponent = props => {
     <Container className={className} {...wrapperProps}>
       <Row className="align-items-center justify-content-center">
         <Col xs="auto">{printIcon()}</Col>
-        <Col>{printMessage()}</Col>
+        <Col>
+          <p className="text-center">
+            {printMessage()}
+          </p>
+        </Col>
       </Row>
     </Container>
   );

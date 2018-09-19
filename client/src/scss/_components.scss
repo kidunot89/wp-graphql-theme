@@ -11,22 +11,6 @@ body {
   display: block;
 }
 
-@media (min-width: map-get($grid-breakpoints, 'lg') + 1) {
-  .app-body {
-    position: relative;
-
-    &::before {
-      content: "";
-      @include make-col-ready();
-      @include make-col(5, 16);
-      position: fixed;
-      background-color: $light;
-      border-right: 0.085em solid darken( $gray-400, .3em );
-      height: 100vh;
-    }
-  }
-}
-
 .site-title {
   position: relative;
   font-family: $font-family-sans-serif;
@@ -43,6 +27,32 @@ body {
   opacity: 0.7;
 }
 
+.entry {
+  background-color: $light;
+
+  .entry-header {
+    padding: 0 7.6923%;
+    .entry-title {
+      font-size: 2.6rem;
+      line-height: 1.1538;
+      margin-bottom: .9231em;
+      clear: both;
+      font-weight: 700;
+    }
+  }
+  
+  .entry-content {
+    padding: 0 7.6923% 7.6923%;
+
+    h2 {
+      font-size: 2.2rem;
+      line-height: 1.3636;
+      margin-top: 2.1818em;
+      margin-bottom: 1.0909em;
+    }
+  }
+}
+
 .primary-menu, .social-menu {
   position: relative;
 
@@ -54,35 +64,63 @@ body {
   }
 }
 
-.customizr {
-  position: relative;
-  min-height: 100vh;
-
-  .panel {    
-    position: absolute !important;
-    z-index: 5;
-
-    background-color: $tertiary;
-    opacity: 0.7;
+@include media-breakpoint-up(sm) {
+  .entry {
+    .entry-header {
+      .entry-title {
+        font-size: 3.5rem;
+        line-height: 1.2;
+        margin-bottom: 1.2em;
+      }
+    }
   }
-}
 
-@media (max-width: map-get($grid-breakpoints, 'md')) {
   .customizr {
+    position: relative;
+    min-height: 100vh;
   
-    .panel {
-      left: 0;
-      bottom: 0;
-
-      min-width: 100vw;
-      height: 40vh;
-      overflow-x: scroll;
-      overflow-y: hidden;
+    .panel {    
+      position: absolute !important;
+      z-index: 5;
+  
+      background-color: $tertiary;
+      opacity: 0.7;
     }
   }
 }
 
-@media (min-width: map-get($grid-breakpoints, 'md') + 1) {
+@include media-breakpoint-up(md) {
+  .entry {
+    margin: 0 7.6923% 7.6923%;
+    padding-top: 7.6923%;
+    box-shadow: 0 0 1px darken( $gray-400, .3em );
+    border-radius: 0.1em;
+
+    &:first-of-type {
+      margin: 7.6923% 7.6923%;
+    }
+
+    .entry-header {
+      padding: 0 9.0909%;
+      .entry-title {
+        font-size: 3.9rem;
+        line-height: 1.2308;
+        margin-bottom: 1.2308em;
+      }
+    }
+    
+    .entry-content {
+      padding: 0 9.0909% 9.0909%;
+
+      h2 {
+        font-size: 2.9rem;
+        line-height: 1.2069;
+        margin-top: 1.931em;
+        margin-bottom: .9655em;
+      }
+    }
+  }
+
   .customizr {
     @include make-row();
     position: relative;
@@ -99,3 +137,80 @@ body {
   }
 }
 
+@include media-breakpoint-up(lg) {
+  .app-body {
+    position: relative;
+
+    &::before {
+      content: "";
+      @include make-col-ready();
+      @include make-col(5, 16);
+      position: fixed;
+      background-color: $light;
+      border-right: 0.085em solid darken( $gray-400, .3em );
+      height: 100vh;
+    }
+  }
+
+  .entry {
+    margin: 0 8.3333% 8.3333%;
+    padding-top: 8.3333%;
+  
+    &:first-of-type {
+      margin: 8.3333% 8.3333%;
+    }
+
+    .entry-header {
+      padding: 0 10%;
+      .entry-title {
+        font-size: 3.1rem;
+        line-height: 1.1613;
+        margin-bottom: 1.1613em;
+      }
+    }
+    
+    .entry-content {
+      padding: 0 10% 10%;
+
+      h2 {
+        font-size: 2.9rem;
+        line-height: 1.2069;
+        margin-top: 1.931em;
+        margin-bottom: .9655em;
+      }
+    }
+  }
+
+  .customizr {
+    .panel {
+      left: 0;
+      bottom: 0;
+
+      min-width: 100vw;
+      height: 40vh;
+      overflow-x: scroll;
+      overflow-y: hidden;
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .entry {
+    .entry-header {
+      .entry-title {
+        font-size: 3.9rem;
+        line-height: 1.2308;
+        margin-bottom: 1.2308em;
+      }
+
+      .entry-content {
+        h2 {
+          font-size: 3.2rem;
+          line-height: 1.25;
+          margin-top: 2em;
+          margin-bottom: 1em;
+        }
+      }
+    }
+  }
+}

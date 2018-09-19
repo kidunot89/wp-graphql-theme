@@ -5,6 +5,7 @@
 	 * @package twentyfifteen-react-apollo
 	 */
 
+	use GraphQLRelay\Relay;
 	use WPGraphQL\Data\DataSource;
 	use WPGraphQL\Data\ExtraSource;
 	use WPGraphQL\Type\Sidebar\Connection\SidebarConnectionDefinition;
@@ -204,12 +205,12 @@
 		if( empty( $fields['pageOnFront'] ) ) {
 
 			$fields[ 'pageOnFront' ] = [
-				'type' => Types::int(),
+				'type' => Types::ID(),
 				'description' => __( 'The page that should be displayed on the front page', THEME_NAME ),
 				'resolve' => function() {
-					$id = get_option( 'page_on_front' );
+					$id = get_option( 'page_on_front', null );
 
-					return ! empty( $id ) ? $id : null;
+					return ! empty( $id ) ? Relay::toGlobalId( 'page', $id ) : null;
 				},
 			];
 		}
@@ -220,12 +221,12 @@
 		 */
 		if( empty( $fields['pageForPosts'] ) ) { 
 			$fields[ 'pageForPosts' ] = [
-				'type' => Types::int(),
+				'type' => Types::post_object( 'page' ),
 				'description' => __( 'The page that displays posts', THEME_NAME ),
 				'resolve' => function() {
 					$id = get_option( 'page_for_posts' );
 
-					return ! empty( $id ) ? $id : null;
+					return ! empty( $id ) ? DataSource::resolve_post_object( $id, 'page' ) : null;
 				},
 			];
 		}

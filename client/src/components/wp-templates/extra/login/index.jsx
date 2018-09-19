@@ -1,6 +1,5 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import _ from 'lodash';
 
 import { wrapper } from 'components/wp-templates/';
 import LoginForm from './form';
@@ -19,7 +18,7 @@ class Login extends Component {
   /**
    * clear authenication properties then reset store
    */
-  logout( client ) {
+  logout() {
     const { clearCurrentUser, loggedIn } = this.props;
     return new Promise((resolve, reject) => {
       if (loggedIn) {

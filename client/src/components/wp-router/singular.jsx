@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 
@@ -22,7 +22,7 @@ const Singular = (props) => {
 
     case 'page':
       // Split match.url, remove empty strings, and retrieve page uri
-      const uri = match.params[0].replace('^\/|\/$', '');
+      const uri = match.params[0].replace(/^\/|\/$/, '');
       return (<WPTemplates.Page uri={uri} />);
 
     default:

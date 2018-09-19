@@ -1,8 +1,8 @@
-import PostsArchive from './archive';
+import Archive from './archive';
 import HomePage from './home';
 import Search from './search';
 export * from './utils';
 export * from './post-type';
-export * from './other';
+export * from './extra';
 
-export { HomePage, PostsArchive, Search };
+export { HomePage, Archive, Search };
