@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { withApollo, Query } from 'react-apollo';
 import gql from 'graphql-tag';
 import { Container, Row, Col } from 'reactstrap';
+import { BrowserView } from 'react-device-detect';
+
 import { WPCore, WPRouter, WPTemplates } from './components';
 
 const BODY_QUERY = gql`
@@ -48,60 +50,43 @@ class Body extends Component {
   render() {
     const { appUserProps, customizr } = this.props;
     return (
-      <Container fluid className="app-body" style={{
-        minHeight: '100vh',
-        padding: 0,
-      }}>
+      <Container fluid className="app-body">
         <Query query={BODY_QUERY}>
           {({ data, error, loading }) => {
             if (loading) return (<WPTemplates.Loading />);
             if (error) return (<WPTemplates.Error fault="query" debugMsg={error.message} />);
             if (data) {
-
-              const { allSettings: {
-                generalSettingsTitle: title,
-                generalSettingsDescription: description,
-                homeUrl: url,
-              }, themeMods } = data;
-              
-              const root = (customizr) ? '' : '/customizer';
+              const {
+                allSettings: {
+                  generalSettingsTitle: title,
+                  generalSettingsDescription: description,
+                  homeUrl: url,
+                },
+                themeMods: { customLogo: logo }
+              } = data;
+              const root = (customizr) ? '/customizer' : '';
 
               return (
                 <Row>
-                  <WPCore.Header
-                    {...themeMods}
-                    {...{ title, description, url }}
-                    logoProps={{
-                      className: 'site-logo img-fluid p-2 mb-3',
-                    }}
-                    titleProps={{
-                      className: 'site-title text-lg-center',
-                    }}
-                    descriptionProps={{
-                      className: 'site-description text-lg-center',
-                    }}
-                    headSectionProps={{
-                      className: 'd-flex flex-column header-row',
-                    }}
-                  >
+                  <WPCore.Header {...{ logo, description, title, url }}>
                     <WPTemplates.Menu
                       className="primary-menu"
                       location="primary"
                       wrapper={Col}
-                      wrapperStyle={{ marginBottom: '20%' }}
                       wrapperProps={{ xs: 'auto' }}
                       pills
                       vertical
                       {...{ root, siteUrl: url }}
                     />
-                    <WPTemplates.Login {...appUserProps} wrapper={Col} wrapperProps={{ xs: 'auto' }} wrapperStyle={{ marginBottom: '20%' }} />
-                    <WPTemplates.Sidebar id="sidebar-1" wrapper={Col} wrapperProps={{ xs: 'auto' }} wrapperStyle={{ marginBottom: '20%' }} />
+                    <WPTemplates.Login {...appUserProps} wrapper={Col} wrapperProps={{ xs: 'auto' }}/>
+                    <BrowserView renderWithFragments>
+                      <WPTemplates.Sidebar id="sidebar-1" wrapper={Col} wrapperProps={{ xs: 'auto' }} />
+                    </BrowserView>
                     <WPTemplates.Menu
                       className="social-menu"
                       location="social"
                       wrapper={Col}
                       wrapperProps={{ xs: 'auto' }}
-                      wrapperStyle={{ marginBottom: '20%' }}
                       fill
                       {...{ root, siteUrl: url }}
                     />

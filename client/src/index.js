@@ -34,9 +34,6 @@ const httpLink = new HttpLink({
   credentials: 'same-origin',
 });
 
-console.log( (process.env.REACT_APP_APOLLO_CLIENT_URI) ? 
-process.env.REACT_APP_APOLLO_CLIENT_URI : endpoint, endpoint );
-
 
 // Add the authorization to the headers
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -51,7 +48,9 @@ const authMiddleware = new ApolloLink((operation, forward) => {
 
 const client = new ApolloClient({
   link: concat(authMiddleware, httpLink),
-  cache: new InMemoryCache(),
+  cache: new InMemoryCache({
+    dataIdFromObject: object => object.id || null
+  }),
 });
 
 // Get app container ID attribute

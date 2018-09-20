@@ -38,7 +38,7 @@
 	 * @return array
 	 */
 	function twentyfifteen_types( $schema_config ) {
-		require_once get_template_directory() . '/inc/wp-graphql/Types.php';
+		require_once get_template_directory() . '/inc/wp-graphql-types/Types.php';
 
 		if ( empty( $schema_config['types'] ) ) {
 			$schema_config['types'] = [
@@ -67,7 +67,7 @@
 	 * @return GraphQL\Type\Definition\FieldDefinition
 	 */
 	function twentyfifteen_queries( $query_fields ) {
-		require_once get_template_directory() . '/inc/wp-graphql/Types.php';
+		require_once get_template_directory() . '/inc/wp-graphql-types/Types.php';
 
 		if ( empty( $query_fields['sidebar'] ) ) {
 			$query_fields['sidebar'] = SidebarQuery::root_query();
@@ -101,7 +101,7 @@
 	 * @return array|null
 	 */
 	function twentyfifteen_resolve_node( $node, $id, $type ) {
-		require_once get_template_directory() . '/inc/wp-graphql/Types.php';
+		require_once get_template_directory() . '/inc/wp-graphql-types/Types.php';
 		switch($type) {
 			case 'sidebar':
 				$node = ExtraSource::resolve_sidebar( $id );
@@ -169,7 +169,7 @@
 	 * @return \GraphQL\Type\Definition\FieldDefinition
 	 */
 	function twentyfifteen_mutations( $mutation_fields ) {
-		require_once get_template_directory() . '/inc/wp-graphql/mutation-loader.php';
+		require_once get_template_directory() . '/inc/wp-graphql-types/mutation-loader.php';
 
 		if ( empty( $mutation_fields['deleteStyle'] ) ) {
 			$mutation_fields['deleteStyle'] = StyleDelete::mutate();
@@ -304,7 +304,7 @@
 		 * Holds the post type object permalink
 		 * @var array $fields['permalink']
 		 */
-		if( empty( $fields['permalink'] ) || $fields['permalink']['type'] === Types::string() ) {
+		if( empty( $fields['permalink'] ) ) {
 			$fields[ 'permalink' ] = [
 					'type' 				=> Types::string(),
 					'args' 				=> [
@@ -350,7 +350,7 @@
 		if( ! empty( $fields['featuredImage'] ) ) { 
 			$fields['featuredImage']['resolve'] = function ( \WP_Post $post, $args ) {
 				$thumbnail_id = get_post_thumbnail_id( $post->ID );
-				return ! empty( $thumbnail_id ) ? DataSource::resolve_post_object( $thumbnail_id, 'attachment' ) : get_post( absint( $thumbnail_id ) );
+				return ! empty( $thumbnail_id ) ? DataSource::resolve_post_object( $thumbnail_id, 'attachment' ) : null;
 			};
 		}
 

@@ -12,5 +12,5 @@ Tags: React.js, React-Apollo, GraphQL, Bootstrap4
 */
 
 #page, .graphql-endpoint {
-  display: hidden;
+  display: none;
 }

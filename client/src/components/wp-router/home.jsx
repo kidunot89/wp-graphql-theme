@@ -13,9 +13,9 @@ import { WPTemplates } from 'components/';
 const Home = (props) => {
   const { pageOnFront, limit } = props;
   if (pageOnFront) {
-    return (<WPTemplates.HomePage id={pageOnFront} />);
+    return (<WPTemplates.HomePage id={pageOnFront} root={root} />);
   }
-  return (<WPTemplates.Archive first={limit} />)
+  return (<WPTemplates.Archive first={limit} root={root} />)
 }
 
 Home.propTypes = {

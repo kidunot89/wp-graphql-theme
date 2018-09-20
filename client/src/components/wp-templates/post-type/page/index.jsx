@@ -13,9 +13,9 @@ class Page extends Component {
     return (
       <Query {...getQueryProps(id, uri)}>
         {({ data, loading, error, refetch }) => {
-          if (loading) return (<Loading as={Col} />);
+          if (loading) return (<Loading as={Col} className="post" />);
           if (error) return (
-            <Error fault="query" debugMsg={error.message} as={Col} />
+            <Error fault="query" debugMsg={error.message} as={Col} className="post" />
           );
 
           const parser = new ReactParser();
@@ -24,16 +24,16 @@ class Page extends Component {
           if ( page || pageBy ) {
             const { title, content } = page || pageBy;
             return (
-              <Col className="entry">
-                <header className="entry-header">
-                  <h1 className="entry-title">{title}</h1>
+              <Col className="post">
+                <header className="post-header">
+                  <h1 className="post-title">{title}</h1>
                 </header>
-                <div className="entry-content">{parser.parse(content)}</div>
+                <div className="post-body">{parser.parse(content)}</div>
               </Col>
             );
           }
           
-          return (<Error fault="404" as={Col} className="main-entry" />);
+          return (<Error fault="404" as={Col} className="post" />);
         }}
       </Query>
     );

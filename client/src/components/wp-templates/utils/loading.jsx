@@ -42,7 +42,7 @@ const LoadingComponent = props => {
 
   return (
     <Container className={className} {...wrapperProps}>
-      <Row className="align-items-center justify-content-center">
+      <Row className="align-items-center justify-content-center post-body">
         <Col xs="auto">{printIcon()}</Col>
         <Col>{printMessage()}</Col>
       </Row>

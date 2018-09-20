@@ -1,6 +1,9 @@
 # WP-GraphQL-Theme
 A recreation of the TwentyFifteen Wordpress theme made using [**React.js**](https://reactjs.org) and [**React-Apollo**](https://apollographql.com). The [**WPGraphQL**](https://github.com/wp-graphql/wp-graphql) and [**WPGraphQL-JWT-Authenication**](https://github.com/wp-graphql/wp-graphql-jwt-authentication) plugins need to be installed and activated for theme to work properly. This is meant to serve as a boilerplate for future themes I build with React.js, Apollo.
 
+## Demo
+Coming soon... I think
+
 ## Usage 
 **Not anywhere close to stable**
 1. Run `npm run build` - if you haven't run the `build` command before but run the docker test enviroment you may have to change the permissions on the build folder or just delete it as the administrator and run `npm run build` again. 
@@ -45,13 +48,13 @@ All tests are located in `./client/src/__tests__/` and created using [**React Te
 
 2. Write proper documentation
 
-3. Refactor WPRouter and WPTemplates Components w/ mobile support & `reactstrap`
+3. Add transitions
 
-4. Add transitions
+4. Create WPCustomizr Components
 
-5. Create WPCustomizr Components
+5. Add Gutenburg Support
 
-6. Add Gutenburg Support
+6. (Maybe) Finish Widgets
 
 ## Server-side TODO
 1. Add and polish sample data created by `WPGraphQL Test Settings`

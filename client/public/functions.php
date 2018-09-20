@@ -106,6 +106,11 @@
 		add_theme_support( 'custom-logo' );
 
 		/**
+		 * Add support for Gutenburg Styling
+		 */
+		add_theme_support( 'align-wide' );
+
+		/**
 		 * Register Menu
 		 */
 		register_nav_menus(
@@ -143,7 +148,8 @@
 
 		wp_enqueue_style( 'theme-docs', get_stylesheet_uri() );
 
-		wp_enqueue_style( 'main-style', get_template_directory_uri() . '/' . $assets['main.css'] );
+		// DEBUG
+		//wp_enqueue_style( 'main-style', get_template_directory_uri() . '/' . $assets['main.css'] );
 		wp_enqueue_script( 'main-script', get_template_directory_uri() . '/' . $assets['main.js'], array(), THEME_VERSION, true );
 
 	}

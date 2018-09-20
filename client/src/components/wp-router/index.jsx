@@ -10,7 +10,6 @@ import { WPTemplates } from 'components/';
 // WordPress Router Components
 import * as Archive from './archive';
 import Home from './home';
-import Search from './search';
 import Singular from './singular';
 
 /**
@@ -32,7 +31,7 @@ class WPRouter extends Component {
         {({ data, loading, error, refetch }) => {
           if (loading) return (<WPTemplates.Loading as={Col} />);
           if (error) return (
-            <WPTemplates.Error fault="query" debugMsg={error.message} as={Col} className="main-entry" />
+            <WPTemplates.Error fault="query" debugMsg={error.message} as={Col} className="post" />
           );
 
           if ( data && data.allSettings ) {
@@ -60,16 +59,16 @@ class WPRouter extends Component {
             const { root } = this.props;
             return (
               <Switch>
-                <Route exact path={`${root}/`} render={() => (<Home {...{ limit, pageOnFront }} />)} />
-                <Route exact path={`${root}/:year(\\d{4})`} render={({ match: params }) => (<Archive.ByDate {...{ ...params, limit }} />)} />
-                <Route exact path={`${root}/:year(\\d{4})/:monthnum(\\d{2})`} render={({ match: params })=> (<Archive.ByDate {...{ ...params, limit }} />)} />
-                <Route path={`${root}/category/:name`} render={({ match: params }) => (<Archive.ByCategory {...{ ...params, limit }} />)} />
-                <Route path={`${root}/tag/:name`} render={({ match: params }) => (<Archive.ByTag {...{ ...params, limit }} />)} />/>
-                <Route path={`${root}/author/:name`} render={({ match: params }) => (<Archive.ByAuthor {...{ ...params, limit }} />)} />/>
-                <Route path={`${root}/search/:input`} component={Search}/>
-                {slug & (<Route exact path={`${root}/${slug}`} render={() => (<Archive.Latest limit={limit} />)} />)}
-                <Route exact path={`${root}${postsPath}`} render={props => (<Singular {...props} />)} />
-                <Route path={`${root}/(.*)`} render={props => (<Singular {...props} type="page"/>)} />
+                <Route exact path={`${root}/`} render={() => (<Home {...{ limit, pageOnFront, root }} />)} />
+                <Route exact path={`${root}/:year(\\d{4})`} render={({ match: { params } }) => (<Archive.ByDate {...{ ...params, limit, root }} />)} />
+                <Route exact path={`${root}/:year(\\d{4})/:monthnum(\\d{2})`} render={({ match: { params } })=> (<Archive.ByDate {...{ ...params, limit, root }} />)} />
+                <Route path={`${root}/category/:name`} render={({ match: { params } }) => (<Archive.ByCategory {...{ ...params, limit, root }} />)} />
+                <Route path={`${root}/tag/:name`} render={({ match: { params } }) => (<Archive.ByTag {...{ ...params, limit, root }} />)} />/>
+                <Route path={`${root}/author/:name`} render={({ match: { params } }) => (<Archive.ByAuthor {...{ ...params, limit, root }} />)} />
+                <Route path={`${root}/search/:input`} render={({ match: { params } }) => (<WPTemplates.Search {...{ ...params, limit, root }} />)} />
+                {slug & (<Route exact path={`${root}/${slug}`} render={() => (<Archive.Latest {...{ limit, root }} />)} />)}
+                <Route exact path={`${root}${postsPath}`} render={props => (<Singular {...{ ...props, root }} />)} />
+                <Route path={`${root}/(.*)`} render={props => (<Singular {...{ ...props, root }} type="page"/>)} />
               </Switch>
             );
           }
@@ -80,11 +79,7 @@ class WPRouter extends Component {
 }
 
 WPRouter.propTypes = {
-  root: PropTypes.string,
-};
-
-WPRouter.defaultProps = {
-  root: undefined,
+  root: PropTypes.string.isRequired,
 };
 
 export const LOOP_QUERY = gql`
