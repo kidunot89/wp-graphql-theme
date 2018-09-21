@@ -1,7 +1,7 @@
 {
   "name": "WP-GraphQL-Theme",
-  "description": "A recreation of Wordpress TwentyFifteen Theme using React-Apollo"
-  "keywords": ["wordpress", "react", "react.js", "apollo", "react-apollo", "graphql", "wp-graphql"]
+  "description": "A recreation of Wordpress TwentyFifteen Theme using React-Apollo",
+  "keywords": ["wordpress", "react", "react.js", "apollo", "react-apollo", "graphql", "wp-graphql"],
   "version": "0.1.0",
   "author": { "name" : "Geoff Taylor",
     "url" : "https://axistaylor.com/"
