@@ -13,15 +13,15 @@
 
 <footer id="colophon" class="site-footer">
 	<div class="site-info">
-		<a href="<?php echo esc_url( __( 'https://wordpress.org/', '_s' ) ); ?>"><?php
-			/* translators: %s: CMS name, i.e. WordPress. */
-			printf( esc_html__( 'Proudly powered by %s', 'gutenbergtheme' ), 'WordPress' );
-		?></a>
-		<span class="sep"> | </span>
-		<?php
-			/* translators: 1: Theme name, 2: Theme author. */
-			printf( esc_html__( 'Theme: %s', 'gutenbergtheme' ), '<a href="https://github.com/WordPress/gutenberg-starter-theme/">Gutenberg</a>' );
-		?>
+		<div id="social-menu" class="social-menu">
+			<button class="menu-toggle" aria-controls="social" aria-expanded="false"><?php esc_html_e( 'Social Menu', 'theme' ); ?></button>
+			<?php
+				wp_nav_menu( array(
+					'theme_location' => 'social',
+					'menu_id'        => 'social-menu',
+				) );
+			?>
+		</nav><!-- #site-navigation -->
 	</div><!-- .site-info -->
 </footer><!-- #colophon -->
 </div><!-- #page -->

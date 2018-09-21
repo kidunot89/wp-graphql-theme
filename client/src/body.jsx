@@ -70,24 +70,35 @@ class Body extends Component {
                 <Row>
                   <WPCore.Header {...{ logo, description, title, url }}>
                     <WPTemplates.Menu
-                      className="primary-menu"
                       location="primary"
                       wrapper={Col}
+                      wrapperCSS="primary-menu"
                       wrapperProps={{ xs: 'auto' }}
                       pills
                       vertical
                       {...{ root, siteUrl: url }}
                     />
-                    <WPTemplates.Login {...appUserProps} wrapper={Col} wrapperProps={{ xs: 'auto' }}/>
-                    <BrowserView renderWithFragments>
-                      <WPTemplates.Sidebar id="sidebar-1" wrapper={Col} wrapperProps={{ xs: 'auto' }} />
+                    
+                    <WPTemplates.Login
+                      {...appUserProps}
+                      wrapper="div"
+                      wrapperCSS="login w-100"
+                    />
+                    
+                    <BrowserView renderWithFragment>
+                      <WPTemplates.Sidebar
+                        id="sidebar-1"
+                        as={Col}
+                        className="sidebar w-100"
+                      />
                     </BrowserView>
+                    
                     <WPTemplates.Menu
-                      className="social-menu"
                       location="social"
                       wrapper={Col}
+                      wrapperCSS="social-menu w-100"
                       wrapperProps={{ xs: 'auto' }}
-                      fill
+                      justified
                       {...{ root, siteUrl: url }}
                     />
                   </WPCore.Header>

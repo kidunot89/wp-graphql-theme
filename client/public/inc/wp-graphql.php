@@ -198,13 +198,12 @@
 	 */
 	function twentyfifteen_all_settings_fields( $fields ) {
 
-		/** 
-		 * Holds the page_on_front setting
-		 * @var array $fields['pageOnFront']
-		 */
-		if( empty( $fields['pageOnFront'] ) ) {
-
-			$fields[ 'pageOnFront' ] = [
+		
+		$fields += [
+			/** 
+			 * Defines the page_on_front setting
+			 */
+			'pageOnFront' => [
 				'type' => Types::ID(),
 				'description' => __( 'The page that should be displayed on the front page', THEME_NAME ),
 				'resolve' => function() {
@@ -212,15 +211,12 @@
 
 					return ! empty( $id ) ? Relay::toGlobalId( 'page', $id ) : null;
 				},
-			];
-		}
+			],
 
-		/** 
-		 * Holds the page_for_posts setting
-		 * @var array $fields['pageForPosts']
-		 */
-		if( empty( $fields['pageForPosts'] ) ) { 
-			$fields[ 'pageForPosts' ] = [
+			/** 
+			 * Defines the page_for_posts setting
+			 */
+			'pageForPosts' => [
 				'type' => Types::post_object( 'page' ),
 				'description' => __( 'The page that displays posts', THEME_NAME ),
 				'resolve' => function() {
@@ -228,64 +224,52 @@
 
 					return ! empty( $id ) ? DataSource::resolve_post_object( $id, 'page' ) : null;
 				},
-			];
-		}
+			],
 
-		/** 
-		 * Holds the show_avatar setting
-		 * @var array $fields['showAvatar']
-		 */
-		if( empty( $fields['showAvatars'] ) || $fields['showAvatars']['type'] !== Types::boolean() ) {
-			$fields[ 'showAvatars' ] = [
+			/** 
+			 * Defines the show_avatar setting
+			 */
+			'showAvatars' => [
 				'type' => Types::boolean(),
 				'description' => __( 'Avatar Display', THEME_NAME ),
 				'resolve' => function() {
 					return get_option( 'show_avatars', false );
 				},
-			];
-		}
+			],
 
-		/** 
-		 * Holds the users_can_register setting
-		 * @var array $fields['usersCanRegister']
-		 */
-		if( empty( $fields['usersCanRegister'] ) || $fields['usersCanRegister']['type'] !== Types::boolean() ) {
-			$fields[ 'usersCanRegister' ] = [
+			/** 
+			 * Defines the users_can_register setting
+			 */
+			'usersCanRegister' => [
 				'type' => Types::boolean(),
 				'description' => __( 'Anyone can register', THEME_NAME ),
 				'resolve' => function() {
 					return get_option( 'users_can_register', false );
 				},
-			];
-		}
+			],
 
-		/** 
-		 * Holds the permalink_structure setting
-		 * @var array $fields['permalinkStructure']
-		 */
-		if( empty( $fields['permalinkStructure'] ) || $fields['permalinkStructure']['type'] !== Types::string() ) {
-			$fields[ 'permalinkStructure' ] = [
+			/** 
+			 * Defines the permalink_structure setting
+			 */
+		 	'permalinkStructure' => [
 				'type' => Types::string(),
 				'description' => __( 'The structure of the blog\'s permalinks.', THEME_NAME ),
 				'resolve' => function() {
 					return get_option( 'permalink_structure' );
 				},
-			];
-		}
+			],
 
-		/** 
-		 * Holds the site url - recommended of the 'url' field in the `GeneralSetting` Type
-		 * @var array $fields['homeUrl']
-		 */
-		if( empty( $fields['homeUrl'] ) || $fields['homeUrl']['type'] !== Types::string() ) {
-			$fields[ 'homeUrl' ] = [
+			/** 
+			 * Defines the home_url setting
+			 */
+		 	'homeUrl' => [
 				'type' => Types::string(),
 				'description' => __( 'The url to current site. Use this if site is a multisite', THEME_NAME ),
 				'resolve' => function() {
 					return home_url();
 				},
-			];
-		}
+			],
+		];
 
 		return $fields;
 
@@ -300,19 +284,18 @@
 	 */
 	function twentyfifteen_post_object_fields( $fields ) {
 		
-		/** 
-		 * Holds the post type object permalink
-		 * @var array $fields['permalink']
-		 */
-		if( empty( $fields['permalink'] ) ) {
-			$fields[ 'permalink' ] = [
-					'type' 				=> Types::string(),
-					'args' 				=> [
-						'leavename' => [
-							'type' 				=> Types::boolean(),
-							'description' => __( 'Whether to keep post name or page name', THEME_NAME ),
-						],
+		$fields += [
+			/** 
+			 * Holds the post type object permalink field
+			 */
+			'permalink' => [
+				'type' 				=> Types::string(),
+				'args' 				=> [
+					'leavename' => [
+						'type' 				=> Types::boolean(),
+						'description' => __( 'Whether to keep post name or page name', THEME_NAME ),
 					],
+				],
 				'description' 	=> __( 'The permalink to the post object', THEME_NAME ),
 				'resolve' => function( \WP_Post $post, $args ) {
 					if ( ! empty( $args['leavename'] ) && $args['leavename'] ) {
@@ -324,19 +307,47 @@
 					/**
 					 * Strip site url for routing use
 					 */
-					$permalink = str_replace( home_url(), '', get_permalink( $post, $leavename ) );
+					$permalink = str_replace( home_url() . '/', '', get_permalink( $post, $leavename ) );
 
 					return ( $permalink ) ? $permalink : null;
 				},
-			];
+			],
+		];
 
-			return $fields;
-		}
+		return $fields;
 
 	}
 	add_filter( 'graphql_post_fields', 'twentyfifteen_post_object_fields', 10);
 	add_filter( 'graphql_page_fields', 'twentyfifteen_post_object_fields', 10);
 	add_filter( 'graphql_attachment_fields', 'twentyfifteen_post_object_fields', 10);
+
+	/**
+	 * Filter for adding fields related to Gutenberg Editor to the Post Object Type
+	 * 
+	 * @param \GraphQL\Type\Definition\FieldDefinition $fields
+	 * @return \GraphQL\Type\Definition\FieldDefinition
+	 */
+	function twentyfifteen_gutenberg_fields( $fields ) {
+		
+		/** 
+		 * Defines the post type object is_guten_post field
+		 */
+		$fields += [ 
+			'isGutenPost' => [
+				'type' 				=> Types::boolean(),
+				'description' 	=> __( 'Is post made with the Gutenberg', THEME_NAME ),
+				'resolve' => function( \WP_Post $post, $args ) {
+					$is_guten_post = preg_match("/<!-- wp:(.*) -->/", $post->post_content ) ? true : false;
+					return $is_guten_post;
+				},
+			],
+		];
+
+		return $fields;
+
+	}
+	add_filter( 'graphql_post_fields', 'twentyfifteen_gutenberg_fields', 10);
+	add_filter( 'graphql_page_fields', 'twentyfifteen_gutenberg_fields', 10);
 
 	// Bug Fixes
 

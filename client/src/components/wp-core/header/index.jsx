@@ -29,16 +29,16 @@ class Header extends Component {
   render() {
     const { children, title, logo, description } = this.props;
     return (
-      <Col lg={5} className="header-container d-lg-flex pr-0">
+      <Col lg={5} id="masthead" className="d-lg-flex pr-0 site-header" tag="header">
         <BrowserView renderWithFragment>
           <Row className="justify-content-end">
             <Col lg="14" style={{ margin: '20% 0', padding: '0 15%' }}>
-              <Row className="justify-content-center">
+              <Row className="justify-content-center site-branding">
                 {logo && <Logo {...logo} className="site-logo img-fluid p-2 mb-3" />}
                 {title && <Title content={title} className="site-title text-lg-center" />}
                 {description && <Description content={description} className="site-description text-lg-center"/> }
               </Row>
-              <Row className="d-flex flex-column header-row">
+              <Row className="justify-content-center site-navigation">
                 {children}
               </Row>
             </Col>

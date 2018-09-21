@@ -15,8 +15,8 @@
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="profile" href="http://gmpg.org/xfn/11">
-
 	<?php wp_head(); ?>
+	
 </head>
 
 <body <?php body_class(); ?>>
@@ -44,7 +44,7 @@
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'theme' ); ?></button>
 				<?php
 					wp_nav_menu( array(
-						'theme_location' => 'menu-1',
+						'theme_location' => 'primary',
 						'menu_id'        => 'primary-menu',
 					) );
 				?>

@@ -13,7 +13,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
-import { Error, Loading, wrapper } from 'components/wp-templates/'
+import { Error, Loading, wrapper } from 'components/wp-templates'
 import MENU_QUERY from './query';
 
 // Load icons to FontAwesome library

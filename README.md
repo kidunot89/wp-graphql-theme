@@ -1,12 +1,14 @@
 # WP-GraphQL-Theme
-A recreation of the TwentyFifteen Wordpress theme made using [**React.js**](https://reactjs.org) and [**React-Apollo**](https://apollographql.com). The [**WPGraphQL**](https://github.com/wp-graphql/wp-graphql) and [**WPGraphQL-JWT-Authenication**](https://github.com/wp-graphql/wp-graphql-jwt-authentication) plugins need to be installed and activated for theme to work properly. This is meant to serve as a boilerplate for future themes I build with React.js, Apollo.
+A recreation of the TwentyFifteen Wordpress theme made using [**React.js**](https://reactjs.org) and [**React-Apollo**](https://apollographql.com). The [**WPGraphQL**](https://github.com/wp-graphql/wp-graphql) and [**WPGraphQL-JWT-Authenication**](https://github.com/wp-graphql/wp-graphql-jwt-authentication) plugins need to be installed and activated for theme to work properly. This is meant to serve as a boilerplate for future themes I build with React.js, Apollo. 
 
 ## Demo
 Coming soon... I think
 
 ## Usage 
 **Not anywhere close to stable**
-1. Run `npm run build` - if you haven't run the `build` command before but run the docker test enviroment you may have to change the permissions on the build folder or just delete it as the administrator and run `npm run build` again. 
+1. Run `npm run build` in `client` directory. - If you haven't run the `build` command before but run the docker test enviroment you may have to change the permissions on the build folder or just delete it as the administrator and run `npm run build` again. 
+2. Move new `build` directory to the wordpress theme folder and rename it how ever you'd like.
+3. Activate new theme in `Wordpress Dashboard` - Remember WPGraphQL and WPGraphQL-JWT-Authenication must be properly installed and activated for this theme to work.
 
 ## Testing
 Right now the easiest way to get the webpack devServer up and running with a working WPGraphQL plugin is to use the docker environment. Although it's possible without Docker, but its very easy to run into problems.
@@ -40,7 +42,7 @@ All tests are located in `./client/src/__tests__/` and created using [**React Te
 * `__templates_tests__` - WPTemplates Components tests
 
 ## Notes
-* The boilerplate JS Wordpress theme (`/client`) is a merger of three different projects. In one of them I use `tachyons.css` so you may come across many components with class names that do nothing. The design going forward using a custom themed version `Bootstrap 4 Sass` and `reactstrap`.
+* Gutenberg is supported.
 * I wouldn't recommend changing anything but the contents `/client/public/inc/wp-graphql` in the `/client/public` directory. The contents `/client/public` handle WP theme function and SEO optimization on top of loading the JS application. Neither of which it does a great job at but it function a great base going forward.
 
 ## Client-side TODO
@@ -52,9 +54,7 @@ All tests are located in `./client/src/__tests__/` and created using [**React Te
 
 4. Create WPCustomizr Components
 
-5. Add Gutenburg Support
-
-6. (Maybe) Finish Widgets
+5. (Maybe) Finish Widgets
 
 ## Server-side TODO
 1. Add and polish sample data created by `WPGraphQL Test Settings`

@@ -11,6 +11,11 @@ Text Domain: twentyfifteen-react-apollo
 Tags: React.js, React-Apollo, GraphQL, Bootstrap4
 */
 
-#page, .graphql-endpoint {
+.graphql-endpoint {
   display: none;
+}
+
+#page, #root {
+  opacity: 0;
+  transition: opacity ease-out 350ms;
 }

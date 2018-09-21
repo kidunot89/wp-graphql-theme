@@ -24,11 +24,8 @@ class Page extends Component {
           if ( page || pageBy ) {
             const { title, content } = page || pageBy;
             return (
-              <Col className="post">
-                <header className="post-header">
-                  <h1 className="post-title">{title}</h1>
-                </header>
-                <div className="post-body">{parser.parse(content)}</div>
+              <Col className="post page">
+                <div className="entry-content">{parser.parse(content)}</div>
               </Col>
             );
           }

@@ -18,8 +18,8 @@ img {
   min-height: 100vh;
 }
 
-#page {
-  display: block;
+#page, #root {
+  opacity: 1;
 }
 
 .nav-toggle {

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { WPTemplates } from 'components/';
 
 /**
- * 
+ * Common Props
  */
 const archivePropTypes = {
   limit: PropTypes.number.isRequired,
@@ -13,7 +13,9 @@ const archivePropTypes = {
 };
 
 /**
+ * Renders posts archives by author
  * 
+ * @returns {WPTemplates.Archive}
  */
 const ByAuthor = ({ limit, name, root }) => {
   const props = {
@@ -27,7 +29,9 @@ const ByAuthor = ({ limit, name, root }) => {
 ByAuthor.propTypes = archivePropTypes;
 
 /**
+ * Renders posts archives by category
  * 
+ * @returns {WPTemplates.Archive}
  */
 const ByCategory = ({ limit, name, root }) => {
   const props = {
@@ -41,7 +45,9 @@ const ByCategory = ({ limit, name, root }) => {
 ByCategory.propTypes = archivePropTypes;
 
 /**
+ * Renders posts archives by date
  * 
+ * @returns {WPTemplates.Archive}
  */
 const ByDate = ({ monthnum, limit, year, root }) => {
   const props = {
@@ -66,7 +72,9 @@ ByDate.defaultProps = {
 };
 
 /**
+ * Renders posts archives by tag
  * 
+ * @returns {WPTemplates.Archive}
  */
 const ByTag = ({ limit, name, root }) => {
   const props = {
@@ -79,6 +87,11 @@ const ByTag = ({ limit, name, root }) => {
 }
 ByTag.propTypes = archivePropTypes;
 
+/**
+ * Renders posts archives of the most recent posts
+ * 
+ * @returns {WPTemplates.Archive}
+ */
 const Latest = ({ limit, root }) => (<WPTemplates.Archive first={limit} root={root} />);
 Latest.propTypes = { limit: PropTypes.number.isRequired, root: PropTypes.string.isRequired };
 

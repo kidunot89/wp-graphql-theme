@@ -7,11 +7,12 @@ import { WPTemplates } from 'components/';
 
 /**
  * Wordpress Singular Route Component
- * returns Page, Post, or Attachment depending on 'type' prop
+ * Renders Page, Post, Attachment or Error depending on 'type' and 'match.params' prop
  * 
  * @returns {WPTemplates.Attachment}
  * @returns {WPTemplates.Page}
  * @returns {WPTemplates.Post}
+ * @returns {WPTemplates.Error}
  */
 const Singular = (props) => {
   const { type, match, root } = props;

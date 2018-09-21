@@ -28,21 +28,20 @@ class UserControls extends Component {
           if (data && data.viewer) {
             const { username, nicename } = data.viewer;
             return (
-              <Container>
-                <Row className="user-controls">
-                  <Col>
-                    {nicename ? nicename : username}
-                  </Col>
-                  <Col xs="auto">
-                    <Button
-                      onClick={onLogout.bind(this, client)}
-                      data-testid='logout-button'
-                    >
-                      Logout
-                    </Button>
-                  </Col>
-                </Row>
-              </Container>
+              <Row className="user-controls">
+                <Col>
+                  Welcome back, {' '} 
+                  <strong>{nicename ? nicename : username}</strong>!
+                </Col>
+                <Col xs="auto">
+                  <Button
+                    onClick={onLogout.bind(this, client)}
+                    data-testid='logout-button'
+                  >
+                    Logout
+                  </Button>
+                </Col>
+              </Row>
             );
           }
         }}

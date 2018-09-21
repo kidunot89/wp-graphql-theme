@@ -13,10 +13,8 @@ class Main extends Component {
   render() {
     const { children } = this.props;
     return (
-        <Col>
-          <Row>
-            {children}
-          </Row>
+        <Col id="primary" className="row w-100 site-main">
+          {children}
         </Col>
     );
   }

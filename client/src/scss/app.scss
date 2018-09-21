@@ -1,6 +1,7 @@
+// Dependency
+@import 'gutenberg';
+
 // Variables
-@import 'gutenberg/main';
-@import 'gutenberg/gutenberg';
 @import 'colors';
 @import 'fonts';
 @import 'bs_components';
@@ -13,4 +14,4 @@
 
 // Elements
 @import 'typography';
-@import 'components';
+@import 'components/main';

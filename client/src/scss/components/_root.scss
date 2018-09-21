@@ -1,0 +1,39 @@
+/***********************************************
+ *
+ *********** Root Element Styling
+ *
+ **********************************************/
+
+#page, #root {
+  overflow-x: hidden;
+  &.loaded {
+    opacity: 1;
+  }
+
+  .app-body {
+    min-height: 100vh;
+    * {
+      box-sizing: border-box;
+    }
+  }
+}
+
+/***************
+ * DESKTOP
+ ***************/
+@include media-breakpoint-up(lg) {
+  .app-body {
+    position: relative;
+    padding: 0;
+
+    &::before {
+      content: "";
+      @include make-col-ready();
+      @include make-col(5, 16);
+      position: fixed;
+      background-color: $light;
+      border-right: 0.085em solid darken( $gray-400, .3em );
+      height: 100vh;
+    }
+  }
+}

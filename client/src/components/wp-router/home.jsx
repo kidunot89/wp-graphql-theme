@@ -5,13 +5,13 @@ import { WPTemplates } from 'components/';
 
 /**
  * Wordpress Home Route Component
- * returns HomePage if pageOnFront prop set otherwise returns PostsArchive
+ * Renders home page if pageOnFront prop set otherwise renders posts archive
  * 
  * @returns {WPTemplates.HomePage}
- * @returns {WPTemplates.PostsArchive}
+ * @returns {WPTemplates.Archive}
  */
 const Home = (props) => {
-  const { pageOnFront, limit } = props;
+  const { pageOnFront, limit, root } = props;
   if (pageOnFront) {
     return (<WPTemplates.HomePage id={pageOnFront} root={root} />);
   }
@@ -21,6 +21,7 @@ const Home = (props) => {
 Home.propTypes = {
   limit: PropTypes.number.isRequired,
   pageOnFront: PropTypes.number,
+  root: PropTypes.string.isRequired
 };
 
 Home.defaultProps = {

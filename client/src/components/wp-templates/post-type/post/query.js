@@ -14,6 +14,8 @@ export const POST_CONTENT_FRAGMENT= gql`
     date
     modified
     title
+    isGutenPost
+    permalink
   }
 `;
 

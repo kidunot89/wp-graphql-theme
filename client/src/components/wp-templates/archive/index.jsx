@@ -18,7 +18,7 @@ class Archive extends Component {
 
           if (data && data.posts) {
             const { nodes } = data.posts;
-            return _.map(nodes, (props) => (<Post.Display root={root} className="post" key={props.id} excerpt {...props} />));
+            return _.map(nodes, (props) => (<Post.View root={root} key={props.id} excerpt {...props} />));
           }
           return (<Error fault="404" message="No posts found" as={Col} className="post"/>);
         }}

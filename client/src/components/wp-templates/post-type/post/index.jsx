@@ -5,24 +5,22 @@ import { Query } from 'react-apollo';
 import { Col } from 'reactstrap';
 
 import { Error, Loading } from 'components/wp-templates';
-import Display from './display';
+import View from './view';
 import getQueryProps from './query';
 
 class Post extends Component {
   render() {
+    const { id, slug, root } = this.props;
     return (
-      <Query {...getQueryProps(this.props)}>
+      <Query {...getQueryProps({id, slug})}>
         {({ data, loading, error, refetch }) => {
           if (loading) return (<Loading as={Col} />);
-          if (error) return (
-            <Error fault="query" debugMsg={error.message} as={Col} />
-          );
+          if (error) return (<Error fault="query" debugMsg={error.message} as={Col} className="post" />);
 
           if (data && (data.post || data.postBy)) {
             const postData = data.post || data.postBy;
-            return (
-              <Display className="post" root={this.props.root} {...postData} />
-            );
+            
+            return (<View root={root} singular {...postData} />);
           }
         }}
       </Query>
@@ -41,6 +39,6 @@ Post.defaultProps = {
   slug: undefined,
 };
 
-Post.Display = Display;
+Post.View = View;
 
 export default Post;

@@ -54,7 +54,7 @@ const client = new ApolloClient({
 });
 
 // Get app container ID attribute
-const appContainer = (process.env.NODE_ENV === 'production') ? 'page' : 'root';
+const appContainer = document.getElementById((process.env.NODE_ENV === 'production') ? 'page' : 'root');
 
 /**
  * Render App to #root
@@ -65,7 +65,9 @@ ReactDOM.render(
       <App />
     </Router>
   </ApolloProvider>,
-  document.getElementById(appContainer),
+  appContainer,
 );
+
+appContainer.classList.add('loaded');
 
 registerServiceWorker();
