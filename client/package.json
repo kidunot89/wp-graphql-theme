@@ -1,5 +1,5 @@
 {
-  "name": "WP-GraphQL-Theme",
+  "name": "wp-graphql-theme",
   "description": "A recreation of Wordpress TwentyFifteen Theme using React-Apollo",
   "keywords": ["wordpress", "react", "react.js", "apollo", "react-apollo", "graphql", "wp-graphql"],
   "version": "0.1.0",
