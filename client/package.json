@@ -1,7 +1,17 @@
 {
-  "name": "react-js-sandbox",
+  "name": "WP-GraphQL-Theme",
+  "description": "A recreation of Wordpress TwentyFifteen Theme using React-Apollo"
+  "keywords": ["wordpress", "react", "react.js", "apollo", "react-apollo", "graphql", "wp-graphql"]
   "version": "0.1.0",
-  "private": true,
+  "author": { "name" : "Geoff Taylor",
+    "url" : "https://axistaylor.com/"
+  }
+  "license": "MIT",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/kidunot89/wp-graphql-theme.git"
+  },
+  "bugs":{ "url" : "https://github.com/kidunot89/wp-graphql-theme/issues" },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.4",
     "@fortawesome/free-brands-svg-icons": "^5.3.1",
